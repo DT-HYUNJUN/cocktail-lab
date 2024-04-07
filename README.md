@@ -43,9 +43,9 @@
 
 - ### 마이 바 페이지
 
-  <!-- |**재료 추가**|
+  |**재료 추가**|
   |---|
-  |![add](./readme/mybar/add.gif)| -->
+  |![add](./readme/mybar/add.gif)|
 
 # 핵심 기능 
 
