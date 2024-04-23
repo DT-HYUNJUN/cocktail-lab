@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Container,
+  IconButton,
   Paper,
   Typography,
   styled,
@@ -15,6 +16,7 @@ import {
   getByFilter,
   getIngredientByName,
 } from "../features/cocktail/cocktailSlice"
+import ShareIcon from "@mui/icons-material/Share"
 
 const CocktailDetail = () => {
   const drink = useAppSelector((state: RootState) => state.selectedCocktail)
@@ -37,16 +39,34 @@ const CocktailDetail = () => {
     // navigate(`/cocktail/g/${strGlass}`)
   }
 
+  const handleClickShare = (idDrink: string, strDrink: string) => {
+    if (navigator.share) {
+      navigator.share({
+        title: strDrink,
+        url: `https://cacaktail.netlify.app/cocktail/detail/${idDrink}`,
+      })
+    } else {
+      alert("공유하기가 지원되지 않는 환경입니다.")
+    }
+  }
+
   return drink && loading ? (
     <div>loading</div>
   ) : (
     <Container>
       <Box display="flex" flexDirection="column" alignItems="center">
+        <IconButton
+          onClick={() => handleClickShare(drink.idDrink, drink.strDrink)}
+          size="large"
+          color="primary"
+        >
+          <ShareIcon fontSize="large" />
+        </IconButton>
         <DrinkImage src={drink.strDrinkThumb} />
         <Box display="flex" gap={1} mb={2}>
           <Button sx={{ borderRadius: "5px" }} variant="contained" size="small">
             <Typography sx={{ color: "white" }} variant="caption">
-              #{drink.strAlcoholic}
+              {drink.strAlcoholic === "Alcoholic" ? "#알콜" : "#논알콜"}
             </Typography>
           </Button>
           <Button
