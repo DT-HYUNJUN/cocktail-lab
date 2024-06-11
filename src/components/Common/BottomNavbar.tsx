@@ -9,11 +9,15 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { useAppSelector } from "../../app/hooks"
+import type { RootState } from "../../app/store"
 
 const BottomNavbar = () => {
   const [pathValue, setPathValue] = useState("")
-  const { pathname } = useLocation()
 
+  const isLoggedIn = useAppSelector((state: RootState) => state.auth.isLoggedIn)
+
+  const { pathname } = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -22,6 +26,11 @@ const BottomNavbar = () => {
 
   const handleClickIcon = (path: string) => {
     navigate(`/${path}`)
+  }
+
+  const handleClickMyBar = (path: string) => {
+    if (isLoggedIn === false) navigate("/signin")
+    else navigate(`/${path}`)
   }
 
   return (
@@ -65,15 +74,19 @@ const BottomNavbar = () => {
           재료
         </Typography>
       </PathBox>
-      <PathBox onClick={() => handleClickIcon("mybar")}>
-        {pathValue === "/mybar" ? (
+      <PathBox onClick={() => handleClickMyBar("mybar")}>
+        {pathValue === "/mybar" || pathValue.includes("sign") ? (
           <AccountCircleIcon sx={{ fontSize: "24px" }} color="primary" />
         ) : (
           <AccountCircleOutlinedIcon sx={{ fontSize: "24px" }} />
         )}
         <Typography
           variant="caption"
-          color={pathValue === "/mybar" ? "primary" : "none"}
+          color={
+            pathValue === "/mybar" || pathValue.includes("sign")
+              ? "primary"
+              : "none"
+          }
         >
           마이 바
         </Typography>
@@ -105,4 +118,7 @@ const PathBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  "&:hover": {
+    cursor: "pointer",
+  },
 })

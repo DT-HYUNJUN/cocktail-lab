@@ -11,6 +11,8 @@ import MyBar from "./pages/MyBar"
 import Cocktail from "./pages/Cocktail"
 import Ingredient from "./pages/Ingredient"
 import IngredientDetail from "./pages/IngredientDetail"
+import SignUp from "./pages/Auth/SignUp"
+import SignIn from "./pages/Auth/SignIn"
 
 const theme = createTheme({
   typography: {
@@ -36,6 +38,8 @@ const App = () => {
         <BrowserRouter>
           <Navbar />
           <Routes>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/" element={<Home />} />
             <Route path="/cocktail" element={<Cocktail />} />
             <Route path="/ingredient" element={<Ingredient />} />

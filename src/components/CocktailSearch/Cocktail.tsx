@@ -6,8 +6,10 @@ import HeadText from "../Common/HeadText"
 import LoadingCard from "../Common/LoadingCard"
 
 const Cocktail = () => {
-  const drinkList = useAppSelector((state: RootState) => state.cocktailList)
-  const loading = useAppSelector((state: RootState) => state.loading)
+  const drinkList = useAppSelector(
+    (state: RootState) => state.cocktail.cocktailList,
+  )
+  const loading = useAppSelector((state: RootState) => state.cocktail.loading)
 
   return (
     <Box display="flex" flexDirection="column" mt={4}>

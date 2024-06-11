@@ -8,7 +8,7 @@ const MyBarList = () => {
     keyPrefix: "ingredients",
   })
 
-  const myBar = useAppSelector((state: RootState) => state.myBar)
+  const myBar = useAppSelector((state: RootState) => state.cocktail.myBar)
 
   return (
     <Box sx={{ flexGrow: 1, width: 345 }} mt={4}>

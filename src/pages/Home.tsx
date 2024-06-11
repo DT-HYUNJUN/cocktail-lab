@@ -12,9 +12,11 @@ import { filterData } from "../assets/data/filterData"
 const Home = () => {
   const dispatch = useAppDispatch()
 
-  const randomDrink = useAppSelector((state: RootState) => state.randomCocktail)
+  const randomDrink = useAppSelector(
+    (state: RootState) => state.cocktail.randomCocktail,
+  )
 
-  const loading = useAppSelector((state: RootState) => state.loading)
+  const loading = useAppSelector((state: RootState) => state.cocktail.loading)
 
   useEffect(() => {
     dispatch(getRandomCocktail())

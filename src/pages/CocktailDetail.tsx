@@ -19,8 +19,10 @@ import {
 import ShareIcon from "@mui/icons-material/Share"
 
 const CocktailDetail = () => {
-  const drink = useAppSelector((state: RootState) => state.selectedCocktail)
-  const loading = useAppSelector((state: RootState) => state.loading)
+  const drink = useAppSelector(
+    (state: RootState) => state.cocktail.selectedCocktail,
+  )
+  const loading = useAppSelector((state: RootState) => state.cocktail.loading)
 
   const { t } = useTranslation("translation", {
     keyPrefix: "cocktails",

@@ -18,16 +18,18 @@ const FilteredCocktail = () => {
     pathFilterValue: string
   }
 
-  const drinkList = useAppSelector((state: RootState) => state.cocktailList)
-  const loading = useAppSelector((state: RootState) => state.loading)
-  const count = useAppSelector((state: RootState) => state.count)
+  const drinkList = useAppSelector(
+    (state: RootState) => state.cocktail.cocktailList,
+  )
+  const loading = useAppSelector((state: RootState) => state.cocktail.loading)
+  const count = useAppSelector((state: RootState) => state.cocktail.count)
   const selectedFilterValue = useAppSelector(
-    (state: RootState) => state.selectedFilterValue,
+    (state: RootState) => state.cocktail.selectedFilterValue,
   )
   const selectedFilter = useAppSelector(
-    (state: RootState) => state.selectedFilter,
+    (state: RootState) => state.cocktail.selectedFilter,
   )
-  const isEnd = useAppSelector((state: RootState) => state.isEnd)
+  const isEnd = useAppSelector((state: RootState) => state.cocktail.isEnd)
 
   const dispatch = useAppDispatch()
 

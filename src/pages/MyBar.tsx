@@ -6,11 +6,14 @@ import MenuBar from "../components/Common/MenuBar"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import type { RootState } from "../app/store"
 import { addToMyBar } from "../features/cocktail/cocktailSlice"
+import { useNavigate } from "react-router-dom"
+import User from "../components/Auth/User"
 
 const MyBar = () => {
   const [isClickedMyBarList, setIsClickedMyBarList] = useState(true)
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const handleClickMyBarList = () => {
     setIsClickedMyBarList(true)
@@ -24,10 +27,13 @@ const MyBar = () => {
     dispatch(addToMyBar({ strIngredient }))
   }
 
-  const count = useAppSelector((state: RootState) => state.myBar).length
+  const count = useAppSelector(
+    (state: RootState) => state.cocktail.myBar,
+  ).length
 
   return (
     <Container>
+      <User />
       <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
         <MenuBar
           value={isClickedMyBarList}

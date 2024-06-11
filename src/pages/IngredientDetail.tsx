@@ -12,9 +12,11 @@ const IngredientDetail = () => {
   })
 
   const selectedIngredient = useAppSelector(
-    (state: RootState) => state.selectedIngredient,
+    (state: RootState) => state.cocktail.selectedIngredient,
   )
-  const cocktailList = useAppSelector((state: RootState) => state.tempList)
+  const cocktailList = useAppSelector(
+    (state: RootState) => state.cocktail.tempList,
+  )
 
   return (
     <Container>

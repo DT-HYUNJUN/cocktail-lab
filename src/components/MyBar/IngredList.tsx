@@ -36,7 +36,7 @@ const IngredList = (props: Props) => {
     keyPrefix: "ingredients",
   })
 
-  const myBar = useAppSelector((state: RootState) => state.myBar)
+  const myBar = useAppSelector((state: RootState) => state.cocktail.myBar)
 
   useEffect(() => {
     setArr(

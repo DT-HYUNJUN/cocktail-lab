@@ -1,8 +1,9 @@
 /// <reference types="redux-persist/types" />
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
-import { configureStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import cocktailReducer from "../features/cocktail/cocktailSlice"
+import authReducer from "../features/auth/authSlice"
 import storage from "redux-persist/lib/storage"
 import {
   FLUSH,
@@ -14,13 +15,18 @@ import {
   persistReducer,
 } from "redux-persist"
 
+const rootReducer = combineReducers({
+  cocktail: cocktailReducer,
+  auth: authReducer,
+})
+
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, cocktailReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
@@ -31,11 +37,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }),
-    // Adding the api middleware enables caching, invalidation, polling,
-    // and other useful features of `rtk-query`.
   })
-  // configure listeners using the provided defaults
-  // optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors
   setupListeners(store.dispatch)
   return store
 }
@@ -43,7 +45,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
 export const store = makeStore()
 
 // Infer the type of `store`
-export type RootState = ReturnType<typeof cocktailReducer>
+export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = typeof store
 // Infer the `AppDispatch` type from the store itself
 export type AppDispatch = AppStore["dispatch"]

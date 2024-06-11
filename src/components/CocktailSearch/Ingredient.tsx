@@ -8,9 +8,9 @@ import LoadingCard from "../Common/LoadingCard"
 
 const Ingredient = () => {
   const ingredientList = useAppSelector(
-    (state: RootState) => state.ingredientList,
+    (state: RootState) => state.cocktail.ingredientList,
   )
-  const loading = useAppSelector((state: RootState) => state.loading)
+  const loading = useAppSelector((state: RootState) => state.cocktail.loading)
 
   return (
     <Box display="flex" flexDirection="column" mt={4}>
