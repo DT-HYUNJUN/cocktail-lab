@@ -13,6 +13,9 @@ import Ingredient from "./pages/Ingredient"
 import IngredientDetail from "./pages/IngredientDetail"
 import SignUp from "./pages/Auth/SignUp"
 import SignIn from "./pages/Auth/SignIn"
+import Profile from "./pages/Auth/Profile"
+
+export const base_url = "http://localhost:3000/auth"
 
 const theme = createTheme({
   typography: {
@@ -24,6 +27,9 @@ const theme = createTheme({
     },
     secondary: {
       main: "#ffffff",
+    },
+    info: {
+      main: "#bdbdbd",
     },
   },
   shape: {
@@ -38,9 +44,10 @@ const App = () => {
         <BrowserRouter>
           <Navbar />
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/cocktail" element={<Cocktail />} />
             <Route path="/ingredient" element={<Ingredient />} />
             <Route

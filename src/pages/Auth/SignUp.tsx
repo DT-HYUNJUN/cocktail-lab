@@ -13,8 +13,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../app/hooks"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { signIn } from "../../features/auth/authSlice"
-
-const base_url = "http://localhost:3000/auth"
+import { base_url } from "../../App"
 
 const SignUp = () => {
   const [username, setUsername] = useState("")
@@ -99,7 +98,7 @@ const SignUp = () => {
             fullWidth
             onChange={e => setDisplayName(e.target.value)}
             value={displayName}
-            label="이름   "
+            label="닉네임"
             variant="outlined"
             type="text"
             size="small"

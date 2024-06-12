@@ -1,40 +1,42 @@
-import { Button } from "@mui/material"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { useNavigate } from "react-router-dom"
-import { signOut } from "../../features/auth/authSlice"
-import axios from "axios"
+import { Box, Container, Typography } from "@mui/material"
+import { useAppSelector } from "../../app/hooks"
 import type { RootState } from "../../app/store"
-
-const base_url = "http://localhost:3000/auth"
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
+import { useNavigate } from "react-router-dom"
 
 const User = () => {
-  const dispatch = useAppDispatch()
+  const user = useAppSelector((state: RootState) => state.auth.user)
+
   const navigate = useNavigate()
 
-  const uid = useAppSelector((state: RootState) => state.auth.user.id)
-
-  const handleSignOut = () => {
-    dispatch(signOut())
-    navigate("/")
-  }
-
-  const handleUpdateUser = () => {}
-
-  const deleteUser = async () => {
-    await axios.delete(base_url + `/${uid}`)
-    dispatch(signOut())
-    navigate("/")
+  const handleClickProfile = () => {
+    navigate("/profile")
   }
 
   return (
-    <div>
-      <Button onClick={handleSignOut} variant="outlined">
-        로그아웃
-      </Button>
-      <Button onClick={deleteUser} color="error" variant="outlined">
-        탈퇴
-      </Button>
-    </div>
+    <Container sx={{ marginBottom: 4 }}>
+      <Box
+        sx={{ cursor: "pointer" }}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        onClick={handleClickProfile}
+      >
+        <Box component="div" display="flex" alignItems="center">
+          <Typography color="primary">{user.displayName}</Typography>
+          <KeyboardArrowRightIcon />
+        </Box>
+        <Box
+          sx={{ cursor: "pointer" }}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Typography variant="caption">나만의 레시피</Typography>
+          <Typography variant="button">0</Typography>
+        </Box>
+      </Box>
+    </Container>
   )
 }
 

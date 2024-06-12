@@ -14,8 +14,7 @@ import {
   TextField,
 } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
-
-const base_url = "http://localhost:3000/auth"
+import { base_url } from "../../App"
 
 const SignIn = () => {
   const [username, setUsername] = useState("")

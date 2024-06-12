@@ -38,11 +38,14 @@ export const authSlice = createSlice({
       state.token = null
       state.isLoggedIn = false
     },
+    updateUser(state, action) {
+      state.user.displayName = action.payload.displayName
+    },
     setIsLoggedIn(state, action) {
       state.isLoggedIn = action.payload.isLoggedIn
     },
   },
 })
 
-export const { signIn, signOut, setIsLoggedIn } = authSlice.actions
+export const { signIn, signOut, setIsLoggedIn, updateUser } = authSlice.actions
 export default authSlice.reducer
