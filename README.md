@@ -111,7 +111,7 @@ const FilteredCocktail = () => {
         {drinkList.map(drink => (
           <CocktailCard key={drink.idDrink} drink={drink} />
         ))}
-        {isEnd && <HeadText text="끝" variant="h4" />}
+        {isEnd && <SectionTitle text="끝" variant="h4" />}
       </Container>
     )
     <div ref={ref} />
