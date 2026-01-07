@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Container } from "@mui/material"
 import Menu from "../../../widgets/MenuBar"
 import { useTranslation } from "react-i18next"
-import ingreds from "../../../locales/ko/translation.json"
+import ingreds from "../../../shared/i18n/ko/translation.json"
 import CocktailSearch from "./CocktailSearch"
 import IngredientSearch from "./IngredientSearch"
 import { useQuery } from "@tanstack/react-query"

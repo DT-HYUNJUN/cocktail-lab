@@ -602,5 +602,19 @@
       "Balloon Glass": "대형 브랜디 글라스",
       "Coupe Glass": "쿱 글라스"
     }
+  },
+  "unit": {
+    "oz": "ml",
+    "tsp": "티스푼",
+    "bottle": "병",
+    "cup": "컵",
+    "glass": "잔",
+    "pods": "포드",
+    "black": "블랙",
+    "cl": "ml",
+    "dash": "대쉬",
+    "dashes": "대쉬",
+    "Chopped": "슬라이스",
+    "shot": "샷"
   }
 }

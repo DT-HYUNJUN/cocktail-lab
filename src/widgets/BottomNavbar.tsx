@@ -9,6 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { aperolOrange } from "../shared/color/color"
 
 const BottomNavbar = () => {
   const [pathValue, setPathValue] = useState("")
@@ -24,11 +25,13 @@ const BottomNavbar = () => {
     navigate(`/${path}`)
   }
 
+  const currentColor = aperolOrange[100]
+
   return (
     <Nav>
       <PathBox
         onClick={() => handleClickIcon("")}
-        bgcolor={pathValue === "/" ? "rgba(0, 206, 209, 0.4)" : "none"}
+        bgcolor={pathValue === "/" ? currentColor : "none"}
       >
         <HomeOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
@@ -40,9 +43,7 @@ const BottomNavbar = () => {
       </PathBox>
       <PathBox
         onClick={() => handleClickIcon("cocktail")}
-        bgcolor={
-          pathValue.includes("/cocktail") ? "rgba(0, 206, 209, 0.4)" : "none"
-        }
+        bgcolor={pathValue.includes("/cocktail") ? currentColor : "none"}
       >
         <LocalBarOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
@@ -54,9 +55,7 @@ const BottomNavbar = () => {
       </PathBox>
       <PathBox
         onClick={() => handleClickIcon("ingredient")}
-        bgcolor={
-          pathValue.includes("/ingredient") ? "rgba(0, 206, 209, 0.4)" : "none"
-        }
+        bgcolor={pathValue.includes("/ingredient") ? currentColor : "none"}
       >
         <LiquorOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
@@ -68,7 +67,7 @@ const BottomNavbar = () => {
       </PathBox>
       <PathBox
         onClick={() => handleClickIcon("mybar")}
-        bgcolor={pathValue === "/mybar" ? "rgba(0, 206, 209, 0.4)" : "none"}
+        bgcolor={pathValue === "/mybar" ? currentColor : "none"}
       >
         <AccountCircleOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography

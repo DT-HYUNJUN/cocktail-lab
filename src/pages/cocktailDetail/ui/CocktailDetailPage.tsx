@@ -1,20 +1,11 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  IconButton,
-  Paper,
-  Typography,
-  styled,
-} from "@mui/material"
-import { useTranslation } from "react-i18next"
+import { Box, Container, IconButton, styled } from "@mui/material"
+// import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
-import ShareIcon from "@mui/icons-material/Share"
+import LinkIcon from "@mui/icons-material/Link"
 import { useQuery } from "@tanstack/react-query"
 import { getCocktailById } from "../api/getCocktailById"
-import { SectionTitle } from "../../../shared/ui"
 import Loading from "../../../shared/ui/Loading"
+import { aperolOrange } from "../../../shared/color/color"
 
 const CocktailDetailPage = () => {
   const { idDrink } = useParams()
@@ -30,9 +21,9 @@ const CocktailDetailPage = () => {
     enabled: !!idDrink,
   })
 
-  const { t } = useTranslation("translation", {
-    keyPrefix: "cocktails",
-  })
+  // const { t } = useTranslation("translation", {
+  //   keyPrefix: "unit",
+  // })
 
   const navigate = useNavigate()
 
@@ -69,131 +60,134 @@ const CocktailDetailPage = () => {
     }
   })
 
+  // const formatMeasure = (measure: string) => {
+  //   const measureList = measure.trim().split(" ")
+  //   if (measureList.length === 1) {
+  //     // 문자열 하나일 때
+  //     return t(measure)
+  //   } else if (measureList.includes("oz")) {
+  //     // oz 단위일 때
+  //     const amount = measureList
+  //       .slice(0, -1)
+  //       .reduce((acc, cur) => (acc += calculateAmount(cur) * 30), 0)
+  //     const unit = measureList[measureList.length - 1]
+  //     return `${amount} ${t(unit)}`
+  //   } else if (measureList.includes("cl")) {
+  //     // cl 단위일 때
+  //     const amount = measureList
+  //       .slice(0, -1)
+  //       .reduce((acc, cur) => (acc += calculateAmount(cur) * 10), 0)
+  //     const unit = measureList[measureList.length - 1]
+  //     return `${amount} ${t(unit)}`
+  //   } else if (measureList.length > 1) {
+  //     return `${measureList[0]} ${t(measureList.slice(1))}`
+  //   }
+  // }
+
+  // const calculateAmount = (num: string): number => {
+  //   if (num.includes("/")) {
+  //     const amount = num.split("/").map(value => Number(value))
+  //     return amount[0] / amount[1]
+  //   } else {
+  //     return Number(num)
+  //   }
+  // }
+
   return isLoading ? (
     <Loading />
   ) : (
     cocktail && (
       <Container>
-        <Section>
-          <IconButton
-            onClick={() =>
-              handleClickShare(cocktail.idDrink, cocktail.strDrink)
-            }
-            size="large"
-            color="primary"
-          >
-            <ShareIcon fontSize="large" />
-          </IconButton>
+        {/* 칵테일 이미지 */}
+        <ImageSection>
           <DrinkImage src={cocktail.strDrinkThumb} />
-          <Box display="flex" gap={1} mb={2}>
-            <Button
-              sx={{ borderRadius: "5px" }}
-              variant="contained"
+        </ImageSection>
+
+        {/* 칵테일 정보 */}
+        <ContentSection>
+          {cocktail.strTags && (
+            <TagBox>
+              {cocktail.strTags.split(",").map(tag => (
+                <Tag key={tag}>{tag.toUpperCase()}</Tag>
+              ))}
+            </TagBox>
+          )}
+          <CocktailNameBox>
+            <CocktailName>{cocktail.strDrink}</CocktailName>
+            <IconButton
+              onClick={() =>
+                handleClickShare(cocktail.idDrink, cocktail.strDrink)
+              }
               size="small"
+              color="primary"
             >
-              <Typography sx={{ color: "white" }} variant="caption">
-                {cocktail.strAlcoholic === "Alcoholic" ? "#알콜" : "#논알콜"}
-              </Typography>
-            </Button>
-            <Button
-              sx={{ borderRadius: "5px" }}
-              variant="contained"
-              size="small"
-              onClick={() => handleClickGlass(cocktail.strGlass)}
-            >
-              <Typography sx={{ color: "white" }} variant="caption">
-                #{t(`glass.${cocktail.strGlass}`)}
-              </Typography>
-            </Button>
-          </Box>
-          <Typography fontFamily="NanumSquareNeoHeavy" variant="h4">
-            {/* {t(cocktail.strDrink)} */}
-            {cocktail.strDrink}
-          </Typography>
-        </Section>
+              <LinkIcon fontSize="small" />
+            </IconButton>
+          </CocktailNameBox>
+          <CategoryWrapper>
+            <CategoryBox onClick={() => handleClickGlass(cocktail.strGlass)}>
+              <CategoryImage>
+                <span>🍸</span>
+              </CategoryImage>
+              <CategoryContentBox>
+                <CategoryContentTitle>글래스</CategoryContentTitle>
+                <CategoryContentSubTitle>
+                  {cocktail.strGlass}
+                </CategoryContentSubTitle>
+              </CategoryContentBox>
+            </CategoryBox>
+          </CategoryWrapper>
+        </ContentSection>
+
         {/* 재료 */}
-        <Box alignItems="start" mt={3}>
-          <SectionTitle text={"재료"} />
-          <Paper elevation={3}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              gap={1}
-              p={2}
-              pt={4}
-              pb={4}
-              mt={1}
-            >
+        <IngredientSection>
+          <TitleBox>
+            <SectionTitle>재료</SectionTitle>
+          </TitleBox>
+          <ListWrapper>
+            <IngredientList>
               {ingredients.map(
                 ingred =>
                   ingred && (
-                    <Box
-                      key={ingred.ingredient}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Box
-                        component="div"
-                        display="flex"
-                        alignItems="center"
+                    <IngredientListItem key={ingred.ingredient}>
+                      <IngredientImageBox
                         onClick={() => handleClickIngredient(ingred.ingredient)}
                       >
                         <IngredImage
                           src={`https://www.thecocktaildb.com/images/ingredients/${ingred.ingredient}-Small.png`}
-                          alt=""
+                          alt={ingred.ingredient}
                         />
-                        <Typography fontFamily="NanumSquareNeoBold">
-                          {/* {t(ingred.strIngredient)} */}
+                        <IngredientContentText>
                           {ingred.ingredient}
-                        </Typography>
-                      </Box>
-                      <Typography fontFamily="NanumSquareNeoBold">
+                        </IngredientContentText>
+                      </IngredientImageBox>
+                      <IngredientMeasuerText>
                         {ingred.measure}
-                      </Typography>
-                    </Box>
+                        {/* {ingred.measure && formatMeasure(ingred.measure)} */}
+                      </IngredientMeasuerText>
+                    </IngredientListItem>
                   ),
               )}
-            </Box>
-          </Paper>
-        </Box>
+            </IngredientList>
+          </ListWrapper>
+        </IngredientSection>
+
         {/* 레시피 */}
         <Box mt={4}>
-          <SectionTitle text={"레시피"} />
-          <Paper elevation={3}>
-            <Box p={2} pt={4} pb={4} mt={1}>
-              {cocktail.strInstructions ? (
-                cocktail.strInstructions
-                  .split(/[.!]/)
-                  .slice(0, -1)
-                  .map((inst, index) => (
-                    <Box display="flex" alignItems="start" gap={1} key={index}>
-                      <Typography
-                        fontFamily="NanumSquareNeoHeavy"
-                        variant="subtitle2"
-                      >
-                        {index + 1}.
-                      </Typography>
-                      <Typography variant="subtitle2" gutterBottom>
-                        {inst}
-                      </Typography>
-                    </Box>
-                  ))
-              ) : (
-                <Box>
-                  <Typography
-                    fontFamily="NanumSquareNeoHeavy"
-                    variant="subtitle2"
-                  >
-                    1.
-                  </Typography>
-                  <Typography variant="subtitle2" gutterBottom>
-                    {cocktail.strInstructions}
-                  </Typography>
-                </Box>
+          <SectionTitle>만드는 방법</SectionTitle>
+          <ListWrapper>
+            <RecipeList>
+              {cocktail.strInstructions.split(/[.!]/).map(
+                (inst, index) =>
+                  inst && (
+                    <RecipeListItem key={inst}>
+                      <RecipeListIndex>{index + 1}</RecipeListIndex>
+                      <RecipeText>{inst}</RecipeText>
+                    </RecipeListItem>
+                  ),
               )}
-            </Box>
-          </Paper>
+            </RecipeList>
+          </ListWrapper>
         </Box>
       </Container>
     )
@@ -203,19 +197,183 @@ const CocktailDetailPage = () => {
 export default CocktailDetailPage
 
 const DrinkImage = styled("img")({
-  width: "240px",
-  height: "240px",
-  borderRadius: "10px",
-  marginBottom: "10px",
+  width: "100%",
+  height: "100%",
+  borderRadius: 24,
+  boxShadow: "rgb(0 0 0 / 0.25) 0 25px 50px -12px ",
 })
 
 const IngredImage = styled("img")({
-  width: "50px",
-  height: "50px",
+  width: 32,
+  height: 32,
+  marginRight: 4,
 })
 
-const Section = styled(Box)({
+const ImageSection = styled(Box)({
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
+})
+
+const ContentSection = styled(Box)({
+  marginTop: 40,
+})
+
+const TagBox = styled(Box)({
+  marginBottom: 12,
+  display: "flex",
+  gap: 8,
+})
+
+const Tag = styled("span")({
+  color: aperolOrange[400],
+  backgroundColor: aperolOrange[50],
+  borderRadius: 50,
+  padding: "4px 12px",
+  fontWeight: 700,
+  fontSize: 12,
+})
+
+const CocktailName = styled("h1")({
+  fontFamily: "NanumSquareNeoHeavy",
+  fontSize: 30,
+  margin: 0,
+})
+
+const CategoryWrapper = styled("div")({
+  display: "flex",
+  gap: 8,
+  paddingBottom: 24,
+  marginBottom: 24,
+  borderBottom: "1px solid  oklch(.92 .01 260)",
+})
+
+const CategoryBox = styled("div")({
+  display: "flex",
+  gap: 8,
+  cursor: "pointer",
+})
+
+const CategoryImage = styled("div")({
+  backgroundColor: aperolOrange[50],
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "50%",
+  width: 40,
+  height: 40,
+})
+
+const CategoryContentBox = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  paddingTop: 1,
+  paddingBottom: 1,
+})
+
+const CategoryContentTitle = styled("span")({
+  fontSize: 12,
+  color: "oklch(.5 .03 260)",
+})
+
+const CategoryContentSubTitle = styled("span")({
+  fontSize: 12,
+  color: "oklch(.12 .02 260)",
+  fontWeight: 700,
+})
+
+const IngredientSection = styled("div")({
+  marginBottom: 24,
+})
+
+const SectionTitle = styled("h2")({
+  marginBottom: 16,
+  fontWeight: 700,
+})
+
+const ListWrapper = styled("div")({
+  borderRadius: 24,
+  padding: 20,
+  boxShadow:
+    "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  backgroundColor: "#FFF",
+})
+
+const IngredientList = styled("ul")({
+  listStyle: "none",
+  padding: 0,
+})
+
+const IngredientListItem = styled("li")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 12,
+  paddingBottom: 12,
+  borderBottom: "1px solid  oklch(.92 .01 260)",
+})
+
+const IngredientImageBox = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  cursor: "pointer",
+})
+
+const IngredientContentText = styled("span")({
+  fontSize: 14,
+  fontFamily: "NanumSquareNeoBold",
+})
+
+const IngredientMeasuerText = styled("span")({
+  fontSize: 14,
+  fontFamily: "NanumSquareNeoHeavy",
+  color: aperolOrange[400],
+  fontWeight: 700,
+  wordSpacing: 6,
+})
+
+const RecipeList = styled("ol")({
+  padding: 0,
+  listStyle: "none",
+})
+
+const RecipeListItem = styled("li")({
+  display: "flex",
+  alignItems: "center",
+  gap: 16,
+  marginBottom: 16,
+})
+
+const RecipeListIndex = styled("span")({
+  backgroundColor: aperolOrange[400],
+  color: "#FFF",
+  borderRadius: "50%",
+  minWidth: 32,
+  height: 32,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontWeight: 700,
+  boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  fontSize: 12,
+})
+
+const CocktailNameBox = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: 16,
+  marginBottom: 24,
+})
+
+const RecipeText = styled("span")({
+  fontFamily: "NanumSquareNeoBold",
+  fontSize: 14,
+  fontWeight: 700,
+})
+
+const TitleBox = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
 })

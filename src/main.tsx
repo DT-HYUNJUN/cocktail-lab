@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client"
 import App from "./app/App"
 import "./index.css"
-import "./locales/i18n"
+import "./shared/i18n/i18n"
 
 const container = document.getElementById("root")
 

@@ -15,6 +15,13 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false,
   },
+  returnNull: false,
+  returnEmptyString: false,
+  parseMissingKeyHandler: key => {
+    // key: "unit.slice"
+    const lastKey = key.split(".").pop()
+    return lastKey ?? key
+  },
 })
 
 export default i18n
