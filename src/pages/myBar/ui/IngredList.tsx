@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next"
 import { ingredientData } from "../../../shared/model/ingredientData"
 import SearchBar from "../../../widgets/SearchBar"
 import { useEffect, useState } from "react"
-import { useCocktail } from "../../../app/store"
+import { useCocktailStore } from "../../../app/store"
 
 interface Props {
   handleClickIngredient: (strIngredient: string) => void
@@ -35,7 +35,7 @@ const IngredList = (props: Props) => {
     keyPrefix: "ingredients",
   })
 
-  const myBar = useCocktail(state => state.myBar)
+  const myBar = useCocktailStore(state => state.myBar)
 
   useEffect(() => {
     setArr(

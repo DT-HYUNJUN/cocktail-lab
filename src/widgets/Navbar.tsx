@@ -2,12 +2,12 @@ import { useNavigate } from "react-router-dom"
 import { Box, styled } from "@mui/material"
 import { useState } from "react"
 import SearchBar from "./SearchBar"
-import { useCocktail } from "../app/store"
+import { useCocktailStore } from "../app/store"
 
 const Navbar = () => {
   const [searchInput, setSearchInput] = useState("")
 
-  const updateSearchValue = useCocktail(state => state.updateSearchValue)
+  const updateSearchValue = useCocktailStore(state => state.updateSearchValue)
 
   const navigate = useNavigate()
 
@@ -38,7 +38,7 @@ const Navbar = () => {
 export default Navbar
 
 const NavBox = styled(Box)({
-  maxWidth: "430px",
+  maxWidth: "640px",
   boxSizing: "border-box",
   position: "fixed",
   backgroundColor: "white",

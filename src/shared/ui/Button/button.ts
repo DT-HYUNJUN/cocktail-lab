@@ -8,7 +8,7 @@ export const MuiButton: Components<Theme>["MuiButton"] = {
   styleOverrides: {
     root: ({ theme }) => ({
       textTransform: "none",
-      borderRadius: 8,
+      // borderRadius: 12,
       fontWeight: 500,
       boxShadow: "none",
       minHeight: 40,

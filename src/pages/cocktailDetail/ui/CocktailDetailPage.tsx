@@ -223,6 +223,7 @@ const TagBox = styled(Box)({
   marginBottom: 12,
   display: "flex",
   gap: 8,
+  flexWrap: "wrap",
 })
 
 const Tag = styled("span")({

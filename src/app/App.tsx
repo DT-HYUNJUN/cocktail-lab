@@ -27,7 +27,7 @@ export default App
 
 const Wrap = styled("div")({
   position: "relative",
-  maxWidth: 430,
+  maxWidth: 640,
   minHeight: "100dvh",
   margin: "0 auto",
   boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",

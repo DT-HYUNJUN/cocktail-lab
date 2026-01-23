@@ -3,14 +3,14 @@ import { useState } from "react"
 import MenuBar from "../../../widgets/MenuBar"
 import MyBarList from "./MyBarList"
 import IngredList from "./IngredList"
-import { useCocktail } from "../../../app/store"
+import { useCocktailStore } from "../../../app/store"
 
 const MyBarPage = () => {
   const [isClickedMyBarList, setIsClickedMyBarList] = useState(true)
 
-  const myBar = useCocktail(state => state.myBar)
+  const myBar = useCocktailStore(state => state.myBar)
 
-  const updateMyBar = useCocktail(state => state.updateMyBar)
+  const updateMyBar = useCocktailStore(state => state.updateMyBar)
 
   const handleClickMyBarList = () => {
     setIsClickedMyBarList(true)

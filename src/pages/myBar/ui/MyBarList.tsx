@@ -1,13 +1,13 @@
 import { Box, Grid, Paper, Typography, styled } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import { useCocktail } from "../../../app/store"
+import { useCocktailStore } from "../../../app/store"
 
 const MyBarList = () => {
   const { t } = useTranslation("translation", {
     keyPrefix: "ingredients",
   })
 
-  const myBar = useCocktail(state => state.myBar)
+  const myBar = useCocktailStore(state => state.myBar)
 
   return (
     <Box sx={{ flexGrow: 1, width: 345 }} mt={4}>

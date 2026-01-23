@@ -24,10 +24,7 @@ const Router = () => {
           path="/ingredient/:idIngredient"
           element={<IngredientDetailPage />}
         />
-        <Route
-          path="/cocktail/detail/:idDrink"
-          element={<CocktailDetailPage />}
-        />
+        <Route path="/cocktail/:idDrink" element={<CocktailDetailPage />} />
         <Route
           path="/cocktail/:filter/:pathFilterValue"
           element={<FilteredCocktailPage />}

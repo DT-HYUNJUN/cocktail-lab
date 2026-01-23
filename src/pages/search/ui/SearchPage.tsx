@@ -6,7 +6,7 @@ import CocktailSearch from "./CocktailSearch"
 import IngredientSearch from "./IngredientSearch"
 import { useQuery } from "@tanstack/react-query"
 import getCocktailByName from "../api/getCocktailByName"
-import { useCocktail } from "../../../app/store"
+import { useCocktailStore } from "../../../app/store"
 import getIngredientByName from "../api/getIngredientByName"
 import { useState } from "react"
 
@@ -15,7 +15,7 @@ const engPattern = /[a-zA-Z]/
 const SearchPage = () => {
   const [isCocktailSearch, setIsCocktailSearch] = useState(true)
 
-  const searchValue = useCocktail(state => state.searchValue)
+  const searchValue = useCocktailStore(state => state.searchValue)
 
   const { data: cocktailData, isLoading: isCocktailLoading } = useQuery({
     queryKey: ["getCocktailByName"],

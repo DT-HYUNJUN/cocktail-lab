@@ -9,7 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { aperolOrange } from "../shared/color/color"
+import { aperolOrange, curasoBlue } from "../shared/color/color"
 
 const BottomNavbar = () => {
   const [pathValue, setPathValue] = useState("")
@@ -25,7 +25,7 @@ const BottomNavbar = () => {
     navigate(`/${path}`)
   }
 
-  const currentColor = aperolOrange[100]
+  const currentColor = curasoBlue[50]
 
   return (
     <Nav>

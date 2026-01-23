@@ -1,4 +1,6 @@
 import { create } from "zustand"
+import { persist, createJSONStorage } from "zustand/middleware"
+import type { RandomCocktail } from "../pages/home/model/types"
 
 type State = {
   myBar: string[]
@@ -10,7 +12,12 @@ type Action = {
   updateSearchValue: (newSearchValue: string) => void
 }
 
-export const useCocktail = create<State & Action>(set => ({
+type RandomCocktailState = {
+  randomCocktail?: RandomCocktail
+  updateRandomCocktail: (randomCocktail: RandomCocktail) => void
+}
+
+export const useCocktailStore = create<State & Action>(set => ({
   myBar: [],
   searchValue: "",
   updateMyBar: (ingredient: string) =>
@@ -22,3 +29,21 @@ export const useCocktail = create<State & Action>(set => ({
   updateSearchValue: (newSearchValue: string) =>
     set({ searchValue: newSearchValue }),
 }))
+
+export const useRandomCocktailStore = create<RandomCocktailState>()(
+  persist(
+    (set, get) => ({
+      // randomCocktail: {
+      //   idDrink: "",
+      //   strDrink: "",
+      //   strDrinkThumb: "",
+      //   strTags: "",
+      // },
+      updateRandomCocktail: randomCocktail => set({ randomCocktail }),
+    }),
+    {
+      name: "randomCocktail-storage",
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+)
