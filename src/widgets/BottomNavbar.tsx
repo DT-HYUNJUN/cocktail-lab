@@ -1,21 +1,46 @@
 import { Box, Typography, styled } from "@mui/material"
-import HomeIcon from "@mui/icons-material/Home"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
-import LocalBarIcon from "@mui/icons-material/LocalBar"
 import LocalBarOutlinedIcon from "@mui/icons-material/LocalBarOutlined"
-import LiquorIcon from "@mui/icons-material/Liquor"
 import LiquorOutlinedIcon from "@mui/icons-material/LiquorOutlined"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import { useLocation, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { aperolOrange, curasoBlue } from "../shared/color/color"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { curasoBlue } from "../shared/color/color"
 
 const BottomNavbar = () => {
+  const [effectPosition, setEffectPositino] = useState<{
+    left: number
+    width: number
+  } | null>(null)
   const [pathValue, setPathValue] = useState("")
+
   const { pathname } = useLocation()
 
   const navigate = useNavigate()
+
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useLayoutEffect(() => {
+    const index =
+      pathname === "/"
+        ? 0
+        : pathname.startsWith("/cocktail")
+          ? 1
+          : pathname.startsWith("/ingredient")
+            ? 2
+            : pathname.startsWith("/mybar")
+              ? 3
+              : 0
+
+    const target = iconRefs.current[index]
+    if (!target) return
+
+    setEffectPositino({
+      left: target.offsetLeft,
+      width: target.offsetWidth,
+    })
+  }, [pathname])
 
   useEffect(() => {
     setPathValue(pathname)
@@ -25,13 +50,15 @@ const BottomNavbar = () => {
     navigate(`/${path}`)
   }
 
-  const currentColor = curasoBlue[50]
-
   return (
     <Nav>
+      {effectPosition && (
+        <EffectBox left={effectPosition.left} width={effectPosition.width} />
+      )}
+
       <PathBox
         onClick={() => handleClickIcon("")}
-        bgcolor={pathValue === "/" ? currentColor : "none"}
+        ref={el => (iconRefs.current[0] = el)}
       >
         <HomeOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
@@ -43,7 +70,7 @@ const BottomNavbar = () => {
       </PathBox>
       <PathBox
         onClick={() => handleClickIcon("cocktail")}
-        bgcolor={pathValue.includes("/cocktail") ? currentColor : "none"}
+        ref={el => (iconRefs.current[1] = el)}
       >
         <LocalBarOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
@@ -55,19 +82,19 @@ const BottomNavbar = () => {
       </PathBox>
       <PathBox
         onClick={() => handleClickIcon("ingredient")}
-        bgcolor={pathValue.includes("/ingredient") ? currentColor : "none"}
+        ref={el => (iconRefs.current[2] = el)}
       >
-        <LiquorOutlinedIcon sx={{ fontSize: 24 }} />
+        <SearchOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
           variant="caption"
           color={pathValue.includes("/ingredient") ? "black" : "grey"}
         >
-          재료
+          검색
         </Typography>
       </PathBox>
       <PathBox
         onClick={() => handleClickIcon("mybar")}
-        bgcolor={pathValue === "/mybar" ? currentColor : "none"}
+        ref={el => (iconRefs.current[3] = el)}
       >
         <AccountCircleOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
@@ -85,6 +112,7 @@ export default BottomNavbar
 
 const Nav = styled(Box)({
   width: 314,
+  height: 52,
   boxSizing: "border-box",
   position: "fixed",
   backgroundColor: "white",
@@ -96,18 +124,34 @@ const Nav = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: 3,
+  padding: 4,
   boxShadow: "rgba(0, 0, 0, 0.2) 0px 2px 6px",
   borderRadius: "6.25rem",
 })
 
-const PathBox = styled(Box)({
+const PathBox = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   cursor: "pointer",
   borderRadius: "6.25rem",
-  width: 78,
-  paddingTop: 2,
-  paddingBottom: 2,
+  width: 80,
+  height: 44,
+  zIndex: 10,
 })
+
+const EffectBox = styled("div")<{
+  left: number
+  width: number
+}>`
+  position: absolute;
+  background-color: ${curasoBlue[50]};
+  width: 80px;
+  height: 46px;
+  border-radius: 6.25rem;
+  left: ${({ left }) => left}px;
+  width: ${({ width }) => width}px;
+  transition:
+    left 300ms ease,
+    width 300ms ease;
+`

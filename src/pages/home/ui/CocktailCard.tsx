@@ -77,7 +77,7 @@ export const Card = styled.div`
 const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3/4;
   overflow: hidden;
   background-color: var(--color-muted, #f4f4f5);
 `
@@ -107,7 +107,7 @@ const Content = styled.div`
 `
 
 const Title = styled.h3`
-  font-size: 1.25rem; /* 20px */
+  font-size: 1rem; /* 20px */
   font-weight: 700;
   margin-bottom: 0.375rem;
   transition: color 0.3s ease;

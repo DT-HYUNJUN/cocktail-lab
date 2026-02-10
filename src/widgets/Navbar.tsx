@@ -38,7 +38,7 @@ const Navbar = () => {
 export default Navbar
 
 const NavBox = styled(Box)({
-  maxWidth: "640px",
+  maxWidth: 480,
   boxSizing: "border-box",
   position: "fixed",
   backgroundColor: "white",

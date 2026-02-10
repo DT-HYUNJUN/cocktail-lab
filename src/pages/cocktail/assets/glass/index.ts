@@ -1,0 +1,6 @@
+export { default as Collins } from "./collins.png"
+export { default as Highball } from "./highball.png"
+export { default as Hurricane } from "./hurricane.png"
+export { default as Margarita } from "./margarita.png"
+export { default as Martini } from "./martini.png"
+export { default as Old } from "./old.png"

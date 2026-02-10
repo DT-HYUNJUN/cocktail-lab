@@ -15,11 +15,11 @@ const Router = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/cocktail" element={<Cocktail />} />
-        <Route path="/ingredient" element={<Ingredient />} />
+        <Route path="/cocktail/ingredient" element={<Ingredient />} />
         <Route
           path="/ingredient/:idIngredient"
           element={<IngredientDetailPage />}

@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search"
 interface SearchBarProps {
   inputValue: string
   handleInputSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleSubmitSearch: (e: React.ChangeEvent<HTMLFormElement>) => void
+  handleSubmitSearch?: (e: React.ChangeEvent<HTMLFormElement>) => void
   placeholder: string
 }
 

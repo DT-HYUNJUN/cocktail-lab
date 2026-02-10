@@ -11,8 +11,8 @@ import SearchBar from "../../../widgets/SearchBar"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { SectionTitle } from "../../../shared/ui"
-import { ingredientData } from "../../../shared/model/ingredientData"
 import { useNavigate } from "react-router-dom"
+import { ingredientData } from "../model/ingredientData"
 
 const Ingredient = () => {
   const navigate = useNavigate()
@@ -45,7 +45,7 @@ const Ingredient = () => {
       />
       <Box sx={{ flexGrow: 1 }} mt={4}>
         <SectionTitle text={"재료"} gutterBottom={true} />
-        <Grid container spacing={2}>
+        <IngredientSection>
           {ingredientData.map(ingred => (
             <Grid key={ingred.strIngredient} item xs={6}>
               <CardActionArea
@@ -80,7 +80,7 @@ const Ingredient = () => {
               </CardActionArea>
             </Grid>
           ))}
-        </Grid>
+        </IngredientSection>
       </Box>
     </Container>
   )
@@ -90,4 +90,9 @@ export default Ingredient
 
 const IngredImage = styled("img")({
   width: "150px",
+})
+
+const IngredientSection = styled("div")({
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr 1fr",
 })
