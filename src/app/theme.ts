@@ -31,24 +31,26 @@ export const theme = createTheme({
     },
     MuiChip: {
       styleOverrides: {
-        root: {
-          color: aperolOrange[400],
-          backgroundColor: aperolOrange[50],
-          borderRadius: 50,
-          padding: "4px 12px",
-          fontWeight: 700,
-        },
         sizeSmall: {
           fontSize: "0.75rem",
           height: 20,
         },
-        label: {
-          padding: 0,
+        outlined: {
+          backgroundColor: "#FFF",
+        },
+        colorPrimary: {
+          color: aperolOrange[400],
+          backgroundColor: aperolOrange[50],
+          borderRadius: 50,
+          fontWeight: 700,
+          ":hover": {
+            color: "#FFF",
+          },
         },
         clickable: {
           backgroundColor: "#fcf2f0",
           ":hover": {
-            backgroundColor: aperolOrange[100],
+            backgroundColor: aperolOrange[400],
           },
         },
       },

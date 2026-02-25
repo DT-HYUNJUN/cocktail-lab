@@ -195,13 +195,12 @@ const FilterInner = styled("div")({
 
 const FilterMenu = styled("div")({
   position: "sticky",
-  top: 0,
+  top: 48,
   borderBottom: "1px solid #ebebeb",
   display: "flex",
-  justifyContent: "space-evenly",
-  paddingTop: 8,
-  paddingBottom: 8,
-  backgroundColor: "#FFF",
+  justifyContent: "space-between",
+  padding: "8px 24px",
+  backgroundColor: "oklch(0.99 0 0)",
   zIndex: 100,
 })
 

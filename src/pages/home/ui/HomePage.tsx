@@ -102,7 +102,7 @@ const HomePage = () => {
               />
             ) : (
               <Chip
-                clickable
+                variant="filled"
                 color="primary"
                 key={category.filterValue}
                 label={category.filterName}

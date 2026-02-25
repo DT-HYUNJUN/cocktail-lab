@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { Typography } from "@mui/material"
 import type { CocktailCardType } from "../../../shared/model/types"
 import { useNavigate } from "react-router-dom"
 import { aperolOrange } from "../../../shared/color/color"
@@ -16,19 +15,6 @@ const CocktailCard = ({ cocktail }: CocktailCardProps) => {
   }
 
   return (
-    // <Card onClick={() => handleClickCard(cocktail.idDrink)}>
-
-    //     <ImageWrapper>
-    //       <Image src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />
-    //     </ImageWrapper>
-    //     <CardTitleBox>
-    //       <Typography variant="h4" fontWeight={700}>
-    //         {cocktail.strDrink}
-    //       </Typography>
-    //     </CardTitleBox>
-
-    // </Card>
-
     <Card onClick={() => handleClickCard(cocktail.idDrink)}>
       <ImageWrapper>
         <Image src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />
@@ -48,7 +34,7 @@ export const Card = styled.div`
   overflow: hidden;
   border: none;
   border-radius: 12px;
-  background-color: var(--color-card, #fff);
+  background-color: #fff;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transition:
     transform 0.2s ease,
@@ -59,7 +45,6 @@ export const Card = styled.div`
   }
 
   &:hover {
-    ${/* hover 시 자식 요소 제어 */ ""}
     img {
       transform: scale(1.1);
     }
@@ -79,7 +64,7 @@ const ImageWrapper = styled.div`
   width: 100%;
   aspect-ratio: 3/4;
   overflow: hidden;
-  background-color: var(--color-muted, #f4f4f5);
+  background-color: #f4f4f5;
 `
 
 const Image = styled.img`
@@ -103,33 +88,12 @@ const Overlay = styled.div`
 `
 
 const Content = styled.div`
-  padding: 1rem; /* 16px */
+  padding: 1rem;
 `
 
 const Title = styled.h3`
-  font-size: 1rem; /* 20px */
+  font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.375rem;
   transition: color 0.3s ease;
 `
-
-// const CardContent = styled("div")({
-//   paddingTop: 24,
-//   paddingBottom: 24,
-// })
-
-// const CardImageBox = styled("div")({
-//   height: 300,
-//   overflow: "hidden",
-//   aspectRatio: "4/5",
-// })
-
-// const CardImage = styled("img")({
-//   width: "100%",
-//   height: "100%",
-//   objectFit: "cover",
-// })
-
-// const CardTitleBox = styled("div")({
-//   padding: 16,
-// })

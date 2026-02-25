@@ -27,7 +27,7 @@ const BottomNavbar = () => {
         ? 0
         : pathname.startsWith("/cocktail")
           ? 1
-          : pathname.startsWith("/ingredient")
+          : pathname.startsWith("/search")
             ? 2
             : pathname.startsWith("/mybar")
               ? 3
@@ -81,13 +81,13 @@ const BottomNavbar = () => {
         </Typography>
       </PathBox>
       <PathBox
-        onClick={() => handleClickIcon("ingredient")}
+        onClick={() => handleClickIcon("search")}
         ref={el => (iconRefs.current[2] = el)}
       >
         <SearchOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
           variant="caption"
-          color={pathValue.includes("/ingredient") ? "black" : "grey"}
+          color={pathValue.includes("/search") ? "black" : "grey"}
         >
           검색
         </Typography>
@@ -110,7 +110,7 @@ const BottomNavbar = () => {
 
 export default BottomNavbar
 
-const Nav = styled(Box)({
+const Nav = styled("footer")({
   width: 314,
   height: 52,
   boxSizing: "border-box",

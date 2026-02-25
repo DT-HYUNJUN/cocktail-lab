@@ -35,7 +35,13 @@ const RandomCard = ({ randomCocktail, isFetching }: RandomCardProps) => {
               randomCocktail.strTags
                 ?.split(",")
                 .map(tag => (
-                  <Chip color="primary" size="small" key={tag} label={tag} />
+                  <Chip
+                    variant="filled"
+                    color="primary"
+                    size="small"
+                    key={tag}
+                    label={tag}
+                  />
                 ))
             )}
           </CardTagBox>
