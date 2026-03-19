@@ -47,7 +47,7 @@ const Ingredient = () => {
         <SectionTitle text={"재료"} gutterBottom={true} />
         <IngredientSection>
           {ingredientData.map(ingred => (
-            <Grid key={ingred.strIngredient} item xs={6}>
+            <Grid key={ingred.strIngredient}>
               <CardActionArea
                 onClick={() => handleClickIngredient(ingred.strIngredient)}
               >

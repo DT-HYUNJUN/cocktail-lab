@@ -1,9 +1,3 @@
-export interface CocktailCardType {
-  idDrink: string
-  strDrink: string
-  strDrinkThumb: string
-}
-
 export type IngredientCategory =
   | "base_spirit" // 기본 주류 (럼, 진, 보드카)
   | "liqueur" // 리큐르
@@ -44,11 +38,31 @@ export type BaseSpiritGroup =
   | "tequila"
   | "other"
 
+export type AbvLevel =
+  | "NON_ALCOHOLIC"
+  | "LOW"
+  | "MEDIUM"
+  | "HIGH"
+  | "ULTRA_HIGH"
+
 export interface Ingredient {
   name: string
   category: IngredientCategory
-  alcoholic: boolean
   abv?: number
   flavorProfile?: FlavorProfile[]
   baseSpiritGroup?: BaseSpiritGroup
 }
+
+export interface IngredientFilterState {
+  categories: IngredientCategory[]
+  abvLevels: AbvLevel[]
+  baseSpiritGroups: BaseSpiritGroup[]
+  flavors: FlavorProfile[]
+  search?: string
+}
+
+export type IngredientSortOption =
+  | "NAME_ASC"
+  | "NAME_DESC"
+  | "ABV_ASC"
+  | "ABV_DESC"

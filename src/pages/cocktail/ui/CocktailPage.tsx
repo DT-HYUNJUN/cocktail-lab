@@ -1,7 +1,7 @@
 import { Container } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
-import { aperolOrange } from "../../../shared/color/color"
+import { aperolOrange, backgroundColor } from "../../../shared/color/color"
 import { cocktailFilterList } from "../model/filter"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import type { FilterValue } from "../model/types"
@@ -200,7 +200,7 @@ const FilterMenu = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   padding: "8px 24px",
-  backgroundColor: "oklch(0.99 0 0)",
+  backgroundColor: backgroundColor,
   zIndex: 100,
 })
 

@@ -8,13 +8,21 @@ import {
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { CocktailCard, SectionTitle } from "../../../shared/ui"
 import getIngredientById from "../api/getIngredientById"
 import getCocktailsByIngredient from "../api/getCocktailsByIngredient"
+import { useEffect } from "react"
 
 const IngredientDetailPage = () => {
   const { idIngredient } = useParams()
+  const { state } = useLocation()
+
+  useEffect(() => {
+    if (state) {
+      console.log(state)
+    }
+  }, [state])
 
   const { data: ingredient, isLoading } = useQuery({
     queryKey: ["getIngredientById"],

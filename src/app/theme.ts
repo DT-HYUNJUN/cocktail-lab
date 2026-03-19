@@ -12,6 +12,12 @@ export const theme = createTheme({
     h4: { fontSize: "20px", fontWeight: 500, lineHeight: 1.4 },
     h5: { fontSize: "18px", fontWeight: 500, lineHeight: 1.45 },
     h6: { fontSize: "16px", fontWeight: 500, lineHeight: 1.5 },
+    body2: {
+      fontSize: "14px",
+      fontWeight: 500,
+      lineHeight: 1.25,
+      color: "#4A4A4A",
+    },
   },
   palette,
   shape: {
@@ -42,7 +48,7 @@ export const theme = createTheme({
           color: aperolOrange[400],
           backgroundColor: aperolOrange[50],
           borderRadius: 50,
-          fontWeight: 700,
+          // fontWeight: 700,
           ":hover": {
             color: "#FFF",
           },
@@ -69,6 +75,36 @@ export const theme = createTheme({
               transitionDuration: 700,
             },
           },
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
+    MuiBadge: {
+      styleOverrides: {
+        badge: {
+          top: 4,
+          right: 4,
         },
       },
     },

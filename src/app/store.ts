@@ -1,6 +1,11 @@
 import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 import type { RandomCocktail } from "../pages/home/model/types"
+import type {
+  Ingredient,
+  IngredientFilterState,
+} from "../pages/myBar/model/ingredient.type"
+import { initialFilterState } from "../pages/myBar/model/ingredient.filter"
 
 // 칵테일
 type CocktailState = {
@@ -16,7 +21,6 @@ type CocktailAction = {
 export const useCocktailStore = create<CocktailState & CocktailAction>(set => ({
   myBar: [],
   searchValue: "",
-  recentSearchValueList: ["검색어1", "검색어2"],
   updateMyBar: (ingredient: string) =>
     set(state => ({
       myBar: state.myBar.includes(ingredient)
@@ -108,3 +112,35 @@ export const useRecentSearchStore = create<
     },
   ),
 )
+
+interface IsFromIngredient {
+  scrollY: number
+  state: boolean
+}
+
+// 마이 바
+type MyBarState = {
+  myBarList: Ingredient[]
+  selectedFilters: IngredientFilterState
+  isFromIngredient: IsFromIngredient
+}
+
+type MyBarAction = {
+  updateMyBarList: (ingredient: Ingredient) => void
+  updateSelectedFilters: (filters: IngredientFilterState) => void
+  updateIsFromIngredient: (fromIngredient: IsFromIngredient) => void
+}
+
+export const useMyBarStore = create<MyBarState & MyBarAction>(set => ({
+  myBarList: [],
+  selectedFilters: initialFilterState,
+  isFromIngredient: { scrollY: 0, state: false },
+  updateMyBarList: ingredient =>
+    set(state => ({
+      myBarList: state.myBarList.some(ingred => ingred.name === ingredient.name)
+        ? state.myBarList.filter(ingred => ingred.name !== ingredient.name)
+        : [...state.myBarList, ingredient],
+    })),
+  updateSelectedFilters: selectedFilters => set({ selectedFilters }),
+  updateIsFromIngredient: state => set({ isFromIngredient: state }),
+}))

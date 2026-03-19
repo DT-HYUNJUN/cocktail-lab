@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import type { ComponentType } from "react"
+import { backgroundColor } from "../shared/color/color"
 
 interface TopNavBarProps {
   left?: ComponentType
@@ -23,21 +24,23 @@ const TobNavBar = ({
 
 export default TobNavBar
 
-const Header = styled("header")({
-  boxSizing: "border-box",
-  position: "fixed",
-  top: 0,
-  width: 480,
-  height: 48,
-  backgroundColor: "oklch(0.99 0 0)",
-  display: "flex",
-  gap: 24,
-  alignItems: "center",
-  zIndex: 1000,
-  paddingLeft: 24,
-  paddingRight: 24,
-  // borderBottom: "1px solid black",
-})
+const Header = styled.header`
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  width: 480px;
+  height: 48px;
+  background-color: ${backgroundColor};
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  z-index: 1000;
+  padding-left: 24px;
+  padding-right: 24px;
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`
 
 const LeftBox = styled("div")({
   display: "flex",

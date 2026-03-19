@@ -4,7 +4,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import type { RefObject } from "react"
 
 interface SearchBarProps {
-  inputRef: RefObject<HTMLInputElement>
+  inputRef?: RefObject<HTMLInputElement>
   inputValue: string
   handleInputSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSubmitSearch?: (e: React.ChangeEvent<HTMLFormElement>) => void

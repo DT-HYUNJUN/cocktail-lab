@@ -31,3 +31,6 @@ export const curasoBlue = {
   100: "#c4c5fe",
   50: "#e8e8ff",
 }
+
+export const backgroundColor = "#FFF"
+// export const backgroundColor = "#FCFCFC"
