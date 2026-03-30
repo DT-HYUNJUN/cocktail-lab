@@ -8,7 +8,7 @@ import type {
 
 export const ingredientFilterOptions: IngredientFilterOptions = {
   categories: [
-    { label: "베이스 스피릿", value: "base_spirit" },
+    { label: "스피릿", value: "base_spirit" },
     { label: "리큐르", value: "liqueur" },
     { label: "아페리티보", value: "aperitivo" },
     { label: "강화 와인", value: "fortified_wine" },

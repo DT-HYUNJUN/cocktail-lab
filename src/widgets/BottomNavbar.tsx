@@ -25,7 +25,7 @@ const BottomNavbar = () => {
     const index =
       pathname === "/"
         ? 0
-        : pathname.startsWith("/cocktail")
+        : pathname.startsWith("/cocktail") || pathname.startsWith("/ingredient")
           ? 1
           : pathname.startsWith("/search")
             ? 2
@@ -75,7 +75,11 @@ const BottomNavbar = () => {
         <LocalBarOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
           variant="caption"
-          color={pathValue.includes("/cocktail") ? "black" : "grey"}
+          color={
+            pathValue.includes("/cocktail") || pathValue.includes("/ingredient")
+              ? "black"
+              : "grey"
+          }
         >
           칵테일
         </Typography>

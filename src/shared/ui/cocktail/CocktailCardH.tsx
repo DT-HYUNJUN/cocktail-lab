@@ -1,17 +1,17 @@
 import { Chip, Skeleton, styled, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import type { RandomCocktail } from "../model/types"
+import type { RandomCocktail } from "../../../pages/home/model/types"
 
-interface RandomCardProps {
-  randomCocktail: RandomCocktail
+interface CocktailCardHProps {
+  cocktail: RandomCocktail
   isFetching: boolean
 }
 
-const RandomCard = ({ randomCocktail, isFetching }: RandomCardProps) => {
+const CocktailCardH = ({ cocktail, isFetching }: CocktailCardHProps) => {
   const navigate = useNavigate()
 
   const handleClickCard = () => {
-    navigate(`/cocktail/${randomCocktail.idDrink}`)
+    navigate(`/cocktail/${cocktail.idDrink}`)
   }
 
   return (
@@ -21,10 +21,7 @@ const RandomCard = ({ randomCocktail, isFetching }: RandomCardProps) => {
           {isFetching ? (
             <Skeleton variant="rounded" width={128} height={128} />
           ) : (
-            <CardImage
-              src={randomCocktail.strDrinkThumb}
-              alt={randomCocktail.strDrink}
-            />
+            <CardImage src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />
           )}
         </CardImageBox>
         <CardDetail>
@@ -32,7 +29,7 @@ const RandomCard = ({ randomCocktail, isFetching }: RandomCardProps) => {
             {isFetching ? (
               <Skeleton variant="text" width={40} />
             ) : (
-              randomCocktail.strTags
+              cocktail.strTags
                 ?.split(",")
                 .map(tag => (
                   <Chip
@@ -48,7 +45,7 @@ const RandomCard = ({ randomCocktail, isFetching }: RandomCardProps) => {
           {isFetching ? (
             <Skeleton variant="text" width={100} />
           ) : (
-            <Typography variant="h4">{randomCocktail.strDrink}</Typography>
+            <Typography variant="h4">{cocktail.strDrink}</Typography>
           )}
         </CardDetail>
       </CardContent>
@@ -56,7 +53,7 @@ const RandomCard = ({ randomCocktail, isFetching }: RandomCardProps) => {
   )
 }
 
-export default RandomCard
+export default CocktailCardH
 
 const Card = styled("div")({
   borderRadius: 20,

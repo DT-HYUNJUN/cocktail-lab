@@ -2,14 +2,14 @@ import { Button, Chip, Container, styled, Typography } from "@mui/material"
 // import { CocktailCard } from "../../../shared/ui"
 import { useQuery } from "@tanstack/react-query"
 import { getRandomCocktail } from "../api/getRandomCocktail"
-import RandomCard from "./RandomCard"
+import CocktailCardH from "../../../shared/ui/cocktail/CocktailCardH"
 import { useRandomCocktailStore } from "../../../app/store"
 import { useEffect, useState } from "react"
 import { categoryList } from "../model/categoryList"
 import type { GetCocktailByFilterPayload } from "../model/types"
 import getCocktailByFilter from "../api/getCocktailByFilter"
 import Loading from "../../../shared/ui/Loading"
-import CocktailCard from "./CocktailCard"
+import CocktailCard from "../../../shared/ui/cocktail/CocktailCard"
 import { aperolOrange } from "../../../shared/color/color"
 import { useNavigate } from "react-router-dom"
 
@@ -82,8 +82,8 @@ const HomePage = () => {
           </Button>
         </TitleBox>
         {randomCocktail && (
-          <RandomCard
-            randomCocktail={randomCocktail}
+          <CocktailCardH
+            cocktail={randomCocktail}
             isFetching={isFetchingRandom}
           />
         )}

@@ -14,7 +14,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close"
 import CheckIcon from "@mui/icons-material/Check"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
-import { ingredientData } from "../../../shared/model/ingredientData"
 import { useEffect, useMemo, useRef, useState } from "react"
 import type {
   IngredientCategory,
@@ -23,6 +22,7 @@ import type {
   FlavorProfile,
   AbvLevel,
   IngredientSortOption,
+  Ingredient,
 } from "../model/ingredient.type"
 import TuneIcon from "@mui/icons-material/Tune"
 import {
@@ -39,6 +39,7 @@ import {
 } from "../model/ingredient.sort"
 import FilterChip from "./FilterChip"
 import { useMyBarStore } from "../../../app/store"
+import { ingredientData } from "../model/ingredient.data"
 
 const IngredList = () => {
   const [open, setOpen] = useState(false)
@@ -247,7 +248,7 @@ const IngredList = () => {
             </EmptyResult>
           ) : (
             result.map(ingred => (
-              <Grid size={{ xs: 6, sm: 3 }} key={ingred.name}>
+              <Grid size={{ xs: 6, sm: 4 }} key={ingred.name}>
                 <IngredientCard ingred={ingred} />
               </Grid>
             ))

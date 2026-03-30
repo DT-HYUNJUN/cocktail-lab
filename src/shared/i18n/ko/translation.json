@@ -120,7 +120,9 @@
       "Jim Beam": "짐 빔",
       "Johnnie Walker": "조니 워커",
       "Kahlua": "칼루아",
-      "Kiwi": "키위"
+      "Kiwi": "키위",
+      "Orange juice": "오랜지 주스",
+      "Vodka": "보드카"
     },
     "ko-ingredient-names": {
       "화이트 럼": "light rum",
@@ -614,7 +616,7 @@
   },
   "filter": {
     "category": {
-      "base_spirit": "베이스 스피릿",
+      "base_spirit": "스피릿",
       "liqueur": "리큐르",
       "aperitivo": "아페리티보",
       "fortified_wine": "강화 와인",
@@ -651,7 +653,11 @@
       "nutty": "고소함",
       "chocolate": "초콜릿",
       "coffee": "커피",
-      "citrus": "시트러스"
+      "citrus": "시트러스",
+      "mineral": "미네랄",
+      "malty": "몰티",
+      "grassy": "풀향",
+      "smooth": "부드러움"
     }
   }
 }

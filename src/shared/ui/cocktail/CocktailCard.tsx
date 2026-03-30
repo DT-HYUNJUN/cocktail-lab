@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import type { CocktailCardType } from "../../../shared/model/types"
+import type { CocktailCardType } from "../../model/types"
 import { useNavigate } from "react-router-dom"
-import { aperolOrange } from "../../../shared/color/color"
+import { aperolOrange } from "../../color/color"
 
 interface CocktailCardProps {
   cocktail: CocktailCardType

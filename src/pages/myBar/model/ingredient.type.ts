@@ -28,6 +28,10 @@ export type FlavorProfile =
   | "chocolate"
   | "coffee"
   | "citrus"
+  | "mineral"
+  | "malty"
+  | "grassy"
+  | "smooth"
 
 export type BaseSpiritGroup =
   | "rum"
@@ -49,7 +53,7 @@ export interface Ingredient {
   name: string
   category: IngredientCategory
   abv?: number
-  flavorProfile?: FlavorProfile[]
+  flavorProfile: FlavorProfile[]
   baseSpiritGroup?: BaseSpiritGroup
 }
 

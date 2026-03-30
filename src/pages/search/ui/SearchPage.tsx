@@ -6,7 +6,7 @@ import { useRecentSearchStore } from "../../../app/store"
 import { useQuery } from "@tanstack/react-query"
 import getCocktailByName from "../api/getCocktailByName"
 import Loading from "../../../shared/ui/Loading"
-import CocktailCard from "../../home/ui/CocktailCard"
+import CocktailCard from "../../../shared/ui/cocktail/CocktailCard"
 import { useNavigate, useParams } from "react-router-dom"
 import { useRef, useState } from "react"
 

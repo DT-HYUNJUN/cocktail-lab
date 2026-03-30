@@ -51,7 +51,7 @@ export const ingredientData: Ingredient[] = [
     name: "Ale",
     category: "beer",
     abv: 5,
-    flavorProfile: ["malty", "bitter"] as any,
+    flavorProfile: ["malty", "bitter"],
   },
   {
     name: "Amaretto",
@@ -194,7 +194,7 @@ export const ingredientData: Ingredient[] = [
     category: "base_spirit",
     abv: 40,
     baseSpiritGroup: "rum",
-    flavorProfile: ["dry", "grassy"] as any,
+    flavorProfile: ["dry", "grassy"],
   },
   {
     name: "Campari",
@@ -207,7 +207,11 @@ export const ingredientData: Ingredient[] = [
     category: "fruit",
     flavorProfile: ["fruity", "sweet"],
   },
-  { name: "Carbonated water", category: "soft_drink" },
+  {
+    name: "Carbonated water",
+    category: "soft_drink",
+    flavorProfile: ["mineral"],
+  },
   {
     name: "Chambord raspberry liqueur",
     category: "liqueur",
@@ -338,7 +342,7 @@ export const ingredientData: Ingredient[] = [
     category: "base_spirit",
     abv: 40,
     baseSpiritGroup: "whiskey",
-    flavorProfile: ["smooth", "dry"] as any,
+    flavorProfile: ["smooth", "dry"],
   },
   {
     name: "Jägermeister",
@@ -356,5 +360,186 @@ export const ingredientData: Ingredient[] = [
     name: "Kiwi",
     category: "fruit",
     flavorProfile: ["sour", "fruity"],
+  },
+  // 추가
+  {
+    name: "Tequila",
+    category: "base_spirit",
+    abv: 40,
+    flavorProfile: ["dry", "herbal"],
+    baseSpiritGroup: "tequila",
+  },
+  {
+    name: "Light Rum",
+    category: "base_spirit",
+    abv: 40,
+    flavorProfile: ["sweet", "dry"],
+    baseSpiritGroup: "rum",
+  },
+  {
+    name: "Sweet Vermouth",
+    category: "fortified_wine",
+    abv: 16,
+    flavorProfile: ["sweet", "herbal", "bitter"],
+  },
+  {
+    name: "Triple Sec",
+    category: "liqueur",
+    abv: 30,
+    flavorProfile: ["sweet", "citrus"],
+  },
+  {
+    name: "Lemon Juice",
+    category: "juice",
+    abv: 0,
+    flavorProfile: ["sour", "citrus"],
+  },
+  {
+    name: "Lime Juice",
+    category: "juice",
+    abv: 0,
+    flavorProfile: ["sour", "citrus"],
+  },
+  {
+    name: "Simple Syrup",
+    category: "syrup",
+    abv: 0,
+    flavorProfile: ["sweet"],
+  },
+  {
+    name: "Angostura Bitters",
+    category: "other",
+    abv: 44,
+    flavorProfile: ["bitter", "herbal", "spicy"],
+  },
+  {
+    name: "Tonic Water",
+    category: "soft_drink",
+    abv: 0,
+    flavorProfile: ["bitter", "sweet"],
+  },
+  {
+    name: "Ginger Beer",
+    category: "soft_drink",
+    abv: 0,
+    flavorProfile: ["spicy", "sweet"],
+  },
+  {
+    name: "Mint",
+    category: "herb",
+    abv: 0,
+    flavorProfile: ["herbal"],
+  },
+  {
+    name: "Egg White",
+    category: "dairy",
+    abv: 0,
+    flavorProfile: ["creamy"],
+  },
+  {
+    name: "Orange Bitters",
+    category: "other",
+    abv: 40,
+    flavorProfile: ["bitter", "citrus"],
+  },
+  {
+    name: "Soda Water",
+    category: "soft_drink",
+    abv: 0,
+    flavorProfile: ["dry"],
+  },
+  {
+    name: "St. Germain",
+    category: "liqueur",
+    abv: 20,
+    flavorProfile: ["sweet", "fruity", "herbal"],
+  },
+  {
+    name: "Cinnamon",
+    category: "spice",
+    abv: 0,
+    flavorProfile: ["spicy", "sweet"],
+  },
+  {
+    name: "Honey",
+    category: "syrup",
+    abv: 0,
+    flavorProfile: ["sweet"],
+  },
+  {
+    name: "White Rum",
+    category: "base_spirit",
+    abv: 40,
+    flavorProfile: ["sweet", "fruity"],
+    baseSpiritGroup: "rum",
+  },
+  {
+    name: "Spiced Rum",
+    category: "base_spirit",
+    abv: 35,
+    flavorProfile: ["spicy", "sweet"],
+    baseSpiritGroup: "rum",
+  },
+  {
+    name: "Rye Whiskey",
+    category: "base_spirit",
+    abv: 45,
+    flavorProfile: ["spicy", "dry"],
+    baseSpiritGroup: "whiskey",
+  },
+  {
+    name: "Single Malt Scotch",
+    category: "base_spirit",
+    abv: 43,
+    flavorProfile: ["dry"],
+    baseSpiritGroup: "whiskey",
+  },
+  {
+    name: "Maraschino Liqueur",
+    category: "liqueur",
+    abv: 32,
+    flavorProfile: ["sweet", "fruity"],
+  },
+  {
+    name: "Benedictine",
+    category: "liqueur",
+    abv: 40,
+    flavorProfile: ["herbal", "sweet"],
+  },
+  {
+    name: "Drambuie",
+    category: "liqueur",
+    abv: 40,
+    flavorProfile: ["sweet", "herbal"],
+  },
+  {
+    name: "Falernum",
+    category: "liqueur",
+    abv: 15,
+    flavorProfile: ["spicy", "sweet", "citrus"],
+  },
+
+  // 🍋 Fruits
+  {
+    name: "Lime",
+    category: "fruit",
+    flavorProfile: ["sour", "citrus"],
+  },
+  {
+    name: "Lemon",
+    category: "fruit",
+    flavorProfile: ["sour", "citrus"],
+  },
+
+  // 🧃 Juice
+  {
+    name: "Orange juice",
+    category: "juice",
+    flavorProfile: ["sweet", "citrus"],
+  },
+  {
+    name: "Pineapple juice",
+    category: "juice",
+    flavorProfile: ["sweet", "fruity"],
   },
 ]

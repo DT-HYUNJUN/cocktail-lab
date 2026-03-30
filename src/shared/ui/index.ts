@@ -1,6 +1,6 @@
-import CocktailCard from "./CocktailCard"
-import FilterCard from "./FilterCard"
+import CocktailCard from "./cocktail/CocktailCard"
+import CocktailCardH from "./cocktail/CocktailCardH"
 import SectionTitle from "./SectionTitle"
 import LoadingCard from "./LoadingCard"
 
-export { CocktailCard, FilterCard, SectionTitle, LoadingCard }
+export { CocktailCard, CocktailCardH, SectionTitle, LoadingCard }

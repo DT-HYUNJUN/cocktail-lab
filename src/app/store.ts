@@ -144,3 +144,22 @@ export const useMyBarStore = create<MyBarState & MyBarAction>(set => ({
   updateSelectedFilters: selectedFilters => set({ selectedFilters }),
   updateIsFromIngredient: state => set({ isFromIngredient: state }),
 }))
+
+// 재료
+// type IngredientState = {
+//   ingredient: Ingredient
+// }
+
+// type IngredientAction = {
+//   updateIngredient: (ingredient: Ingredient) => void
+// }
+
+// export const useIngredientStore = create<IngredientState & IngredientAction>(
+//   set => ({
+//     ingredient: {
+//       name: "",
+//       category: "aperitivo",
+//     },
+//     updateIngredient: ingredient => set({ ingredient }),
+//   }),
+// )

@@ -1,121 +1,331 @@
 import {
-  Box,
-  Button,
   CircularProgress,
   Container,
+  Divider,
+  Grid,
   Typography,
   styled,
 } from "@mui/material"
+import LocalFireDepartmentOutlinedIcon from "@mui/icons-material/LocalFireDepartmentOutlined"
+import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined"
+import LiquorOutlinedIcon from "@mui/icons-material/LiquorOutlined"
 import { useTranslation } from "react-i18next"
 import { useQuery } from "@tanstack/react-query"
-import { useLocation, useParams } from "react-router-dom"
-import { CocktailCard, SectionTitle } from "../../../shared/ui"
+import { useParams } from "react-router-dom"
+import { CocktailCard } from "../../../shared/ui"
 import getIngredientById from "../api/getIngredientById"
 import getCocktailsByIngredient from "../api/getCocktailsByIngredient"
-import { useEffect } from "react"
+import { aperolOrange } from "../../../shared/color/color"
+import { ingredientData } from "../../myBar/model/ingredient.data"
+import { useEffect, useState } from "react"
+import type { Ingredient } from "../../myBar/model/ingredient.type"
+import CocktailCardH from "../../../shared/ui/cocktail/CocktailCardH"
+
+const borderRadius = 20
 
 const IngredientDetailPage = () => {
-  const { idIngredient } = useParams()
-  const { state } = useLocation()
+  const { strIngredient } = useParams()
+  const [localIngredientData, setLocalIngredientData] =
+    useState<Ingredient | null>()
 
-  useEffect(() => {
-    if (state) {
-      console.log(state)
-    }
-  }, [state])
-
-  const { data: ingredient, isLoading } = useQuery({
+  const {
+    data: ingredient,
+    isFetching,
+    isSuccess,
+  } = useQuery({
     queryKey: ["getIngredientById"],
     queryFn: () => {
-      if (!idIngredient) {
+      if (!strIngredient) {
         throw new Error("idDrink is required")
       }
-      return getIngredientById(idIngredient)
+      return getIngredientById(strIngredient)
     },
-    enabled: !!idIngredient,
+    enabled: !!strIngredient,
   })
 
-  const { data: cocktailList } = useQuery({
+  const { data: cocktailList, isFetching: isFetchingCocktail } = useQuery({
     queryKey: ["getCocktailsByIngredient"],
     queryFn: () => {
-      if (!ingredient) {
+      if (!strIngredient) {
         throw new Error("ingredient is required")
       }
-      return getCocktailsByIngredient(ingredient.strIngredient)
+      return getCocktailsByIngredient(strIngredient)
     },
-    enabled: !!ingredient,
+    select: data => {
+      if (typeof data === "string") {
+        return []
+      }
+      return data
+    },
+    enabled: !!strIngredient,
   })
 
   const { t } = useTranslation("translation", {
     keyPrefix: "ingredients",
   })
 
-  return isLoading ? (
+  const { t: f } = useTranslation("translation", {
+    keyPrefix: "filter",
+  })
+
+  useEffect(() => {
+    if (isSuccess) {
+      const ingredientTemp = ingredientData.find(
+        i =>
+          i.name.toLocaleLowerCase() ===
+          ingredient.strIngredient.toLocaleLowerCase(),
+      )
+      setLocalIngredientData(ingredientTemp ?? null)
+    }
+  }, [ingredient, isSuccess])
+
+  return isFetching ? (
     <Container>
       <CircularProgress />
     </Container>
   ) : (
     ingredient && (
-      <Container>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={10}>
-          <DrinkImage
-            src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png`}
-          />
-          <Box display="flex" gap={1} mb={2}>
-            {ingredient.strABV && (
-              <Button
-                sx={{ borderRadius: "5px" }}
-                variant="contained"
-                size="small"
-              >
-                <Typography sx={{ color: "white" }} variant="caption">
-                  #{ingredient.strABV}도
-                </Typography>
-              </Button>
-            )}
-            {ingredient.strType && (
-              <Button
-                sx={{ borderRadius: "5px" }}
-                variant="contained"
-                size="small"
-              >
-                <Typography sx={{ color: "white" }} variant="caption">
-                  #{t(`types.${ingredient.strType}`)}
-                </Typography>
-              </Button>
-            )}
-          </Box>
-          <Typography fontFamily="NanumSquareNeoHeavy" variant="h4">
-            {t(`names.${ingredient.strIngredient.toLowerCase()}`)}
+      <div>
+        <IngredientBox>
+          <ImageBox>
+            <IngredientImage
+              src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png`}
+            />
+          </ImageBox>
+          <Typography variant="h4">
+            {localIngredientData?.name
+              ? t(`names.${localIngredientData.name}`)
+              : t(`names.${ingredient.strIngredient}`)}
           </Typography>
-        </Box>
-        <SectionTitle
-          text={`'${t(`names.${ingredient.strIngredient.toLowerCase()}`)}' 칵테일`}
-          variant="body1"
-          gutterBottom={true}
-        />
-        {cocktailList && (
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            gap={4}
-          >
-            {cocktailList.map(cocktail => (
-              <CocktailCard key={cocktail.idDrink} cocktailCard={cocktail} />
-            ))}
-          </Box>
+        </IngredientBox>
+        <Divider />
+        {localIngredientData ? (
+          <>
+            <InformationWrapper>
+              <HeaderText>재료 정보</HeaderText>
+              <Grid container spacing={2}>
+                <Grid size={4}>
+                  <InformationBox>
+                    <IconBox>
+                      <LocalFireDepartmentOutlinedIcon color="primary" />
+                    </IconBox>
+                    <InformationLabel>도수</InformationLabel>
+                    <InformationValue>
+                      {localIngredientData.abv ?? 0}
+                    </InformationValue>
+                  </InformationBox>
+                </Grid>
+                <Grid size={4}>
+                  <InformationBox>
+                    <IconBox>
+                      <AutoAwesomeOutlinedIcon color="primary" />
+                    </IconBox>
+                    <InformationLabel>맛</InformationLabel>
+                    <InformationValue>
+                      {f(`flavors.${localIngredientData.flavorProfile[0]}`)}
+                    </InformationValue>
+                  </InformationBox>
+                </Grid>
+                <Grid size={4}>
+                  <InformationBox>
+                    <IconBox>
+                      <LiquorOutlinedIcon color="primary" />
+                    </IconBox>
+                    <InformationLabel>종류</InformationLabel>
+                    <InformationValue>
+                      {f(`category.${localIngredientData.category}`)}
+                    </InformationValue>
+                  </InformationBox>
+                </Grid>
+                {localIngredientData.flavorProfile.length > 1 && (
+                  <Grid size={12}>
+                    <FlavorProfileBox>
+                      <Typography fontWeight={700} fontSize={14}>
+                        맛 프로필
+                      </Typography>
+                      <FlavorList>
+                        {localIngredientData.flavorProfile.map(flavor => (
+                          <FlavorChip key={flavor}>
+                            {f(`flavors.${flavor}`)}
+                          </FlavorChip>
+                        ))}
+                      </FlavorList>
+                    </FlavorProfileBox>
+                  </Grid>
+                )}
+              </Grid>
+            </InformationWrapper>
+            <Divider />
+          </>
+        ) : (
+          <>
+            <InformationWrapper>
+              <HeaderText>재료 정보</HeaderText>
+              <Grid container spacing={2}>
+                <Grid size={6}>
+                  <InformationBox>
+                    <IconBox>
+                      <LocalFireDepartmentOutlinedIcon color="primary" />
+                    </IconBox>
+                    <InformationLabel>도수</InformationLabel>
+                    <InformationValue>
+                      {ingredient.strAlcohol === "No"
+                        ? "0"
+                        : ingredient.strABV ?? "?"}
+                    </InformationValue>
+                  </InformationBox>
+                </Grid>
+                <Grid size={6}>
+                  <InformationBox>
+                    <IconBox>
+                      <LiquorOutlinedIcon color="primary" />
+                    </IconBox>
+                    <InformationLabel>종류</InformationLabel>
+                    <InformationValue>
+                      {ingredient.strType
+                        ? t(`types.${ingredient.strType}`)
+                        : "기타"}
+                    </InformationValue>
+                  </InformationBox>
+                </Grid>
+              </Grid>
+            </InformationWrapper>
+            <Divider />
+          </>
         )}
-      </Container>
+
+        {cocktailList && cocktailList.length > 0 && (
+          <RelatedCocktailList>
+            <HeaderText>
+              이 재료로 만드는 칵테일{" "}
+              <Typography fontSize={14} component="span" fontWeight={700}>
+                ({cocktailList.length})
+              </Typography>
+            </HeaderText>
+            {cocktailList.length < 4 && (
+              <Grid container>
+                {cocktailList.length < 4 &&
+                  cocktailList.map(cocktail => (
+                    <Grid key={cocktail.idDrink} size={12}>
+                      <CocktailCardH
+                        cocktail={cocktail}
+                        isFetching={isFetchingCocktail}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
+            )}
+            {cocktailList.length >= 4 && (
+              <Grid container spacing={2}>
+                {cocktailList.length >= 4 &&
+                  cocktailList.map(cocktail => (
+                    <Grid key={cocktail.idDrink} size={6}>
+                      <CocktailCard cocktail={cocktail} />
+                    </Grid>
+                  ))}
+              </Grid>
+            )}
+          </RelatedCocktailList>
+        )}
+      </div>
     )
   )
 }
 
 export default IngredientDetailPage
 
-const DrinkImage = styled("img")({
-  width: "240px",
-  height: "240px",
-  borderRadius: "10px",
-  marginBottom: "10px",
+const ImageBox = styled("div")({
+  backgroundColor: "#F7F7F7",
+  width: 200,
+  height: 200,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: borderRadius,
+})
+
+const IngredientImage = styled("img")({
+  width: 180,
+  height: 180,
+})
+
+const IngredientBox = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  paddingLeft: 16,
+  paddingRight: 16,
+  marginBottom: 16,
+  gap: 16,
+})
+
+const InformationWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: 16,
+  padding: 16,
+})
+
+const InformationBox = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 24,
+  padding: 16,
+  backgroundColor: "#F7F7F7",
+  borderRadius: borderRadius,
+})
+
+const IconBox = styled("div")({
+  padding: 12,
+  backgroundColor: aperolOrange[50],
+  borderRadius: "50%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+})
+
+const InformationLabel = styled(Typography)({
+  fontSize: 12,
+})
+
+const InformationValue = styled(Typography)({
+  fontSize: 14,
+  fontWeight: 700,
+})
+
+const HeaderText = styled(Typography)({
+  fontSize: 16,
+  fontWeight: 700,
+})
+
+const FlavorProfileBox = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: 24,
+  padding: 16,
+  backgroundColor: "#F7F7F7",
+  borderRadius: borderRadius,
+})
+
+const FlavorList = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+})
+
+const FlavorChip = styled("div")({
+  backgroundColor: aperolOrange[50],
+  fontSize: 14,
+  borderRadius: 24,
+  padding: "6px 12px",
+})
+
+const RelatedCocktailList = styled("div")({
+  marginTop: 16,
+  display: "flex",
+  flexDirection: "column",
+  gap: 16,
+  paddingLeft: 16,
+  paddingRight: 16,
 })
