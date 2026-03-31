@@ -1,4 +1,4 @@
-export interface Ingredient {
+export interface IngredientForDto {
   idIngredient: string
   strIngredient: string
   strDescription: string
@@ -8,5 +8,5 @@ export interface Ingredient {
 }
 
 export interface IngredientDto {
-  ingredients: Ingredient[]
+  ingredients: IngredientForDto[]
 }

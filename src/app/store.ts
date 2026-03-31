@@ -4,32 +4,8 @@ import type { RandomCocktail } from "../pages/home/model/types"
 import type {
   Ingredient,
   IngredientFilterState,
-} from "../pages/myBar/model/ingredient.type"
-import { initialFilterState } from "../pages/myBar/model/ingredient.filter"
-
-// 칵테일
-type CocktailState = {
-  myBar: string[]
-  searchValue: string
-}
-
-type CocktailAction = {
-  updateMyBar: (ingredient: string) => void
-  updateSearchValue: (newSearchValue: string) => void
-}
-
-export const useCocktailStore = create<CocktailState & CocktailAction>(set => ({
-  myBar: [],
-  searchValue: "",
-  updateMyBar: (ingredient: string) =>
-    set(state => ({
-      myBar: state.myBar.includes(ingredient)
-        ? state.myBar.filter(ingred => ingred !== ingredient)
-        : [...state.myBar, ingredient],
-    })),
-  updateSearchValue: (newSearchValue: string) =>
-    set({ searchValue: newSearchValue }),
-}))
+} from "../entities/ingredient/model/localIngredient/ingredient.type"
+import { initialFilterState } from "../entities/ingredient/model/localIngredient/ingredient.filter"
 
 // 랜덤 칵테일
 type RandomCocktailState = {
@@ -45,12 +21,6 @@ export const useRandomCocktailStore = create<
 >()(
   persist(
     (set, get) => ({
-      // randomCocktail: {
-      //   idDrink: "",
-      //   strDrink: "",
-      //   strDrinkThumb: "",
-      //   strTags: "",
-      // },
       updateRandomCocktail: randomCocktail => set({ randomCocktail }),
     }),
     {
@@ -118,48 +88,35 @@ interface IsFromIngredient {
   state: boolean
 }
 
-// 마이 바
-type MyBarState = {
-  myBarList: Ingredient[]
+// 재료
+type IngredientState = {
+  myIngredientList: Ingredient[]
   selectedFilters: IngredientFilterState
   isFromIngredient: IsFromIngredient
 }
 
-type MyBarAction = {
-  updateMyBarList: (ingredient: Ingredient) => void
+type IngredientAction = {
+  updateMyIngredientList: (ingredient: Ingredient) => void
   updateSelectedFilters: (filters: IngredientFilterState) => void
   updateIsFromIngredient: (fromIngredient: IsFromIngredient) => void
 }
 
-export const useMyBarStore = create<MyBarState & MyBarAction>(set => ({
-  myBarList: [],
-  selectedFilters: initialFilterState,
-  isFromIngredient: { scrollY: 0, state: false },
-  updateMyBarList: ingredient =>
-    set(state => ({
-      myBarList: state.myBarList.some(ingred => ingred.name === ingredient.name)
-        ? state.myBarList.filter(ingred => ingred.name !== ingredient.name)
-        : [...state.myBarList, ingredient],
-    })),
-  updateSelectedFilters: selectedFilters => set({ selectedFilters }),
-  updateIsFromIngredient: state => set({ isFromIngredient: state }),
-}))
-
-// 재료
-// type IngredientState = {
-//   ingredient: Ingredient
-// }
-
-// type IngredientAction = {
-//   updateIngredient: (ingredient: Ingredient) => void
-// }
-
-// export const useIngredientStore = create<IngredientState & IngredientAction>(
-//   set => ({
-//     ingredient: {
-//       name: "",
-//       category: "aperitivo",
-//     },
-//     updateIngredient: ingredient => set({ ingredient }),
-//   }),
-// )
+export const useIngredientStore = create<IngredientState & IngredientAction>(
+  set => ({
+    myIngredientList: [],
+    selectedFilters: initialFilterState,
+    isFromIngredient: { scrollY: 0, state: false },
+    updateMyIngredientList: ingredient =>
+      set(state => ({
+        myIngredientList: state.myIngredientList.some(
+          ingred => ingred.name === ingredient.name,
+        )
+          ? state.myIngredientList.filter(
+              ingred => ingred.name !== ingredient.name,
+            )
+          : [...state.myIngredientList, ingredient],
+      })),
+    updateSelectedFilters: selectedFilters => set({ selectedFilters }),
+    updateIsFromIngredient: state => set({ isFromIngredient: state }),
+  }),
+)

@@ -1,6 +1,6 @@
 import type { AxiosResponse } from "axios"
 import { apiClient } from "../../../shared/api"
-import type { CocktailCardType } from "../../../shared/model/types"
+import type { CocktailCardType } from "../../../entities/drink/model/types"
 
 interface CocktailByIngredientDto {
   drinks: CocktailCardType[]

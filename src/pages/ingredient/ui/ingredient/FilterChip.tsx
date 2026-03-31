@@ -1,5 +1,5 @@
 import { Chip } from "@mui/material"
-import { aperolOrange } from "../../../shared/color/color"
+import { aperolOrange } from "../../../../shared/color/color"
 
 interface FilterChipProps {
   label: string

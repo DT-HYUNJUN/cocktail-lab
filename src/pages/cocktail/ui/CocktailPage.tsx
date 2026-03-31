@@ -3,11 +3,11 @@ import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
 import { aperolOrange, backgroundColor } from "../../../shared/color/color"
 import { cocktailFilterList } from "../model/filter"
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import type { FilterValue } from "../model/types"
 import { useQuery } from "@tanstack/react-query"
 import getCocktailByFilter from "../api/getCocktailByFilter"
-import Loading from "../../../shared/ui/Loading"
+import { Loading } from "../../../shared/ui"
 import CocktailCard from "../../../shared/ui/cocktail/CocktailCard"
 import SearchIcon from "@mui/icons-material/Search"
 import { useNavigate } from "react-router-dom"
@@ -195,11 +195,12 @@ const FilterInner = styled("div")({
 
 const FilterMenu = styled("div")({
   position: "sticky",
-  top: 48,
+  top: 40,
   borderBottom: "1px solid #ebebeb",
   display: "flex",
   justifyContent: "space-between",
   padding: "8px 24px",
+  paddingTop: 0,
   backgroundColor: backgroundColor,
   zIndex: 100,
 })

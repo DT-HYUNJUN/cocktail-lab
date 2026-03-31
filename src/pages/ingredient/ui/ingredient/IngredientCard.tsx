@@ -2,10 +2,10 @@ import { Button, styled, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
 import { useTranslation } from "react-i18next"
-import { useMyBarStore } from "../../../app/store"
-import { aperolOrange } from "../../../shared/color/color"
+import { useIngredientStore } from "../../../../app/store"
+import { aperolOrange } from "../../../../shared/color/color"
 import { useNavigate } from "react-router-dom"
-import type { Ingredient } from "../model/ingredient.type"
+import type { Ingredient } from "../../../../entities/ingredient/model/localIngredient/ingredient.type"
 
 interface IngredientCardProps {
   ingred: Ingredient
@@ -22,13 +22,16 @@ const IngredientCard = ({ ingred }: IngredientCardProps) => {
     keyPrefix: "filter",
   })
 
-  const { myBarList, updateMyBarList, updateIsFromIngredient } = useMyBarStore()
+  const { myIngredientList, updateMyIngredientList, updateIsFromIngredient } =
+    useIngredientStore()
 
   const handleClickAdd = () => {
-    updateMyBarList(ingred)
+    updateMyIngredientList(ingred)
   }
 
-  const isAdded = myBarList.some(ingredient => ingredient.name === ingred.name)
+  const isAdded = myIngredientList.some(
+    ingredient => ingredient.name === ingred.name,
+  )
 
   const handleClickCard = () => {
     updateIsFromIngredient({ scrollY: window.pageYOffset, state: true })

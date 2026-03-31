@@ -1,35 +1,35 @@
 import { Grid, Typography } from "@mui/material"
-import { useMyBarStore } from "../../../app/store"
-import IngredientCard from "./IngredientCard"
+import { useIngredientStore } from "../../../../app/store"
+import IngredientCard from "../ingredient/IngredientCard"
 import styled from "styled-components"
 
-const MyBarList = () => {
-  const { myBarList } = useMyBarStore()
+const MyIngredientList = () => {
+  const { myIngredientList } = useIngredientStore()
 
   return (
-    <MyBarListBox>
+    <MyIngredientListBox>
       <Grid container spacing={2} rowSpacing={3}>
-        {myBarList.length === 0 ? (
+        {myIngredientList.length === 0 ? (
           <EmptyList>
             <Typography variant="body2">
-              내가 가진 재료들로 바를 채워보세요!
+              내가 가진 재료들을 추가해보세요!
             </Typography>
           </EmptyList>
         ) : (
-          myBarList.map(ingred => (
+          myIngredientList.map(ingred => (
             <Grid key={ingred.name} size={{ xs: 6, sm: 3 }}>
               <IngredientCard ingred={ingred} />
             </Grid>
           ))
         )}
       </Grid>
-    </MyBarListBox>
+    </MyIngredientListBox>
   )
 }
 
-export default MyBarList
+export default MyIngredientList
 
-const MyBarListBox = styled("div")({
+const MyIngredientListBox = styled("div")({
   paddingTop: 20,
   paddingLeft: 16,
   paddingRight: 16,

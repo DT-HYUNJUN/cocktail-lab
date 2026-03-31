@@ -48,7 +48,7 @@ const SearchForm = styled("form")({
   alignItems: "center",
   backgroundColor: "#f5f5f5",
   borderRadius: "10px",
-  padding: 10,
+  padding: 8,
 })
 
 const SearchInput = styled("input")({

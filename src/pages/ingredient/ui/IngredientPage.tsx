@@ -1,98 +1,50 @@
-import {
-  Box,
-  CardActionArea,
-  Container,
-  Grid,
-  Paper,
-  styled,
-  Typography,
-} from "@mui/material"
-import SearchBar from "../../../widgets/SearchBar"
+import { Tab, Tabs } from "@mui/material"
 import { useState } from "react"
-import { useTranslation } from "react-i18next"
-import { SectionTitle } from "../../../shared/ui"
-import { useNavigate } from "react-router-dom"
-import { ingredientData } from "../model/ingredientData"
+import IngredList from "./ingredient/IngredList"
+import { useIngredientStore } from "../../../app/store"
+import styled from "styled-components"
+import { backgroundColor } from "../../../shared/color/color"
+import MyIngredientList from "./myIngredient/MyIngredientList"
 
-const Ingredient = () => {
-  const navigate = useNavigate()
+const IngredientPage = () => {
+  const [tabValue, setTabValue] = useState(1)
 
-  const [inputValue, setInputValue] = useState("")
-
-  const handleInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue)
   }
 
-  const handleSubmitSearch = (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault()
-  }
-
-  const { t } = useTranslation("translation", {
-    keyPrefix: "ingredients",
-  })
-
-  const handleClickIngredient = (strIngredient: string) => {
-    navigate(`/ingredient/${strIngredient}`)
-  }
+  const myIngredientList = useIngredientStore(state => state.myIngredientList)
 
   return (
-    <Container>
-      <SearchBar
-        inputValue={inputValue}
-        handleInputSearch={handleInputSearch}
-        handleSubmitSearch={handleSubmitSearch}
-        placeholder="찾으시는 재료를 검색해보세요."
-      />
-      <Box sx={{ flexGrow: 1 }} mt={4}>
-        <SectionTitle text={"재료"} gutterBottom={true} />
-        <IngredientSection>
-          {ingredientData.map(ingred => (
-            <Grid key={ingred.strIngredient}>
-              <CardActionArea
-                onClick={() => handleClickIngredient(ingred.strIngredient)}
-              >
-                <Paper
-                  elevation={3}
-                  sx={{
-                    padding: 2,
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                  >
-                    <IngredImage
-                      src={`https://www.thecocktaildb.com/images/ingredients/${ingred.strIngredient}-Medium.png`}
-                      alt="ingred"
-                    />
-                    <Box flexGrow={1}>
-                      <Typography
-                        fontFamily="NanumSquareNeoBold"
-                        textAlign="center"
-                        variant="body1"
-                      >
-                        {t(`names.${ingred.strIngredient.toLowerCase()}`)}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Paper>
-              </CardActionArea>
-            </Grid>
-          ))}
-        </IngredientSection>
-      </Box>
-    </Container>
+    <div>
+      <FixedTab>
+        <Tabs value={tabValue} onChange={handleChangeTab} variant="fullWidth">
+          <Tab label={`나의 재료 (${myIngredientList.length})`} />
+          <Tab label="재료" />
+        </Tabs>
+      </FixedTab>
+      <ListContainer>
+        {tabValue === 0 && <MyIngredientList />}
+        {tabValue === 1 && <IngredList />}
+      </ListContainer>
+    </div>
   )
 }
 
-export default Ingredient
+export default IngredientPage
 
-const IngredImage = styled("img")({
-  width: "150px",
-})
+const FixedTab = styled.div`
+  border-bottom: 1px solid #dedede;
+  position: fixed;
+  top: 40px;
+  width: 480px;
+  z-index: 100;
+  background-color: ${backgroundColor};
 
-const IngredientSection = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr 1fr",
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`
+const ListContainer = styled("div")({
+  marginTop: 42,
 })

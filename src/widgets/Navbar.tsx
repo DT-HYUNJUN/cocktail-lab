@@ -2,12 +2,9 @@ import { useNavigate } from "react-router-dom"
 import { Box, styled } from "@mui/material"
 import { useState } from "react"
 import SearchBar from "./SearchBar"
-import { useCocktailStore } from "../app/store"
 
 const Navbar = () => {
   const [searchInput, setSearchInput] = useState("")
-
-  const updateSearchValue = useCocktailStore(state => state.updateSearchValue)
 
   const navigate = useNavigate()
 
@@ -17,7 +14,6 @@ const Navbar = () => {
 
   const handleSubmitSearch = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    updateSearchValue(searchInput)
     navigate(`/search/${searchInput}`)
   }
 

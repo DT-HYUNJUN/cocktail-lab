@@ -1,5 +1,5 @@
 import { styled } from "@mui/material"
-import { aperolOrange } from "../color/color"
+import { aperolOrange } from "../../color/color"
 
 interface ChipProps {
   label: string

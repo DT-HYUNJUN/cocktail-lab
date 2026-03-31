@@ -9,3 +9,9 @@ export interface Drink {
   ingredients: { id: number; strIngredient: string }[]
   measures: { id: number; strMeasure: string }[]
 }
+
+export interface CocktailCardType {
+  idDrink: string
+  strDrink: string
+  strDrinkThumb: string
+}

@@ -22,24 +22,23 @@ import type {
   FlavorProfile,
   AbvLevel,
   IngredientSortOption,
-  Ingredient,
-} from "../model/ingredient.type"
+} from "../../../../entities/ingredient/model/localIngredient/ingredient.type"
 import TuneIcon from "@mui/icons-material/Tune"
 import {
   filterIngredients,
   getSelectedFilterCount,
   ingredientFilterOptions,
   initialFilterState,
-} from "../model/ingredient.filter"
-import { aperolOrange } from "../../../shared/color/color"
+} from "../../../../entities/ingredient/model/localIngredient/ingredient.filter"
+import { aperolOrange } from "../../../../shared/color/color"
 import IngredientCard from "./IngredientCard"
 import {
   ingredientSortOptions,
   sortIngredients,
-} from "../model/ingredient.sort"
+} from "../../../../entities/ingredient/model/localIngredient/ingredient.sort"
 import FilterChip from "./FilterChip"
-import { useMyBarStore } from "../../../app/store"
-import { ingredientData } from "../model/ingredient.data"
+import { useIngredientStore } from "../../../../app/store"
+import { ingredientData } from "../../../../entities/ingredient/model/localIngredient/ingredient.data"
 
 const IngredList = () => {
   const [open, setOpen] = useState(false)
@@ -55,7 +54,7 @@ const IngredList = () => {
     updateSelectedFilters,
     isFromIngredient,
     updateIsFromIngredient,
-  } = useMyBarStore()
+  } = useIngredientStore()
 
   // 필터링 된 재료
   const filteredIngredients = useMemo(() => {

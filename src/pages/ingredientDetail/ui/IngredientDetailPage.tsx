@@ -16,10 +16,9 @@ import { CocktailCard } from "../../../shared/ui"
 import getIngredientById from "../api/getIngredientById"
 import getCocktailsByIngredient from "../api/getCocktailsByIngredient"
 import { aperolOrange } from "../../../shared/color/color"
-import { ingredientData } from "../../myBar/model/ingredient.data"
 import { useEffect, useState } from "react"
-import type { Ingredient } from "../../myBar/model/ingredient.type"
-import CocktailCardH from "../../../shared/ui/cocktail/CocktailCardH"
+import type { Ingredient } from "../../../entities/ingredient/model/localIngredient/ingredient.type"
+import { ingredientData } from "../../../entities/ingredient/model/localIngredient/ingredient.data"
 
 const borderRadius = 20
 
@@ -202,29 +201,13 @@ const IngredientDetailPage = () => {
                 ({cocktailList.length})
               </Typography>
             </HeaderText>
-            {cocktailList.length < 4 && (
-              <Grid container>
-                {cocktailList.length < 4 &&
-                  cocktailList.map(cocktail => (
-                    <Grid key={cocktail.idDrink} size={12}>
-                      <CocktailCardH
-                        cocktail={cocktail}
-                        isFetching={isFetchingCocktail}
-                      />
-                    </Grid>
-                  ))}
-              </Grid>
-            )}
-            {cocktailList.length >= 4 && (
-              <Grid container spacing={2}>
-                {cocktailList.length >= 4 &&
-                  cocktailList.map(cocktail => (
-                    <Grid key={cocktail.idDrink} size={6}>
-                      <CocktailCard cocktail={cocktail} />
-                    </Grid>
-                  ))}
-              </Grid>
-            )}
+            <Grid container spacing={2}>
+              {cocktailList.map(cocktail => (
+                <Grid key={cocktail.idDrink} size={6}>
+                  <CocktailCard cocktail={cocktail} />
+                </Grid>
+              ))}
+            </Grid>
           </RelatedCocktailList>
         )}
       </div>

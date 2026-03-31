@@ -1,11 +1,10 @@
 import { Box, Container, IconButton, styled } from "@mui/material"
-// import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 import LinkIcon from "@mui/icons-material/Link"
 import { useQuery } from "@tanstack/react-query"
 import { getCocktailById } from "../api/getCocktailById"
-import Loading from "../../../shared/ui/Loading"
 import { aperolOrange } from "../../../shared/color/color"
+import { Loading } from "../../../shared/ui"
 
 const CocktailDetailPage = () => {
   const { idDrink } = useParams()
@@ -20,10 +19,6 @@ const CocktailDetailPage = () => {
     },
     enabled: !!idDrink,
   })
-
-  // const { t } = useTranslation("translation", {
-  //   keyPrefix: "unit",
-  // })
 
   const navigate = useNavigate()
 
@@ -59,39 +54,6 @@ const CocktailDetailPage = () => {
       return { ingredient, measure }
     }
   })
-
-  // const formatMeasure = (measure: string) => {
-  //   const measureList = measure.trim().split(" ")
-  //   if (measureList.length === 1) {
-  //     // 문자열 하나일 때
-  //     return t(measure)
-  //   } else if (measureList.includes("oz")) {
-  //     // oz 단위일 때
-  //     const amount = measureList
-  //       .slice(0, -1)
-  //       .reduce((acc, cur) => (acc += calculateAmount(cur) * 30), 0)
-  //     const unit = measureList[measureList.length - 1]
-  //     return `${amount} ${t(unit)}`
-  //   } else if (measureList.includes("cl")) {
-  //     // cl 단위일 때
-  //     const amount = measureList
-  //       .slice(0, -1)
-  //       .reduce((acc, cur) => (acc += calculateAmount(cur) * 10), 0)
-  //     const unit = measureList[measureList.length - 1]
-  //     return `${amount} ${t(unit)}`
-  //   } else if (measureList.length > 1) {
-  //     return `${measureList[0]} ${t(measureList.slice(1))}`
-  //   }
-  // }
-
-  // const calculateAmount = (num: string): number => {
-  //   if (num.includes("/")) {
-  //     const amount = num.split("/").map(value => Number(value))
-  //     return amount[0] / amount[1]
-  //   } else {
-  //     return Number(num)
-  //   }
-  // }
 
   return isLoading ? (
     <Loading />
@@ -163,7 +125,6 @@ const CocktailDetailPage = () => {
                       </IngredientImageBox>
                       <IngredientMeasuerText>
                         {ingred.measure}
-                        {/* {ingred.measure && formatMeasure(ingred.measure)} */}
                       </IngredientMeasuerText>
                     </IngredientListItem>
                   ),

@@ -29,17 +29,6 @@ const App = () => {
 
 export default App
 
-// const Wrap = styled.div`
-//   position: relative;
-//   max-width: 480px;
-//   min-height: 100dvh;
-//   margin: 0 auto;
-//   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-//   padding-top: 48px;
-//   padding-bottom: 100px;
-//   background-color: ${backgroundColor};
-// `
-
 const PageBackground = styled.div`
   min-height: 100dvh;
   background-color: #f0f0f0; /* 카드 바깥 배경 */
@@ -54,7 +43,7 @@ const Wrap = styled.div`
   max-width: 480px;
   min-height: 100dvh;
   margin: 0 auto;
-  padding-top: 48px;
+  padding-top: 44px;
   padding-bottom: 100px;
   background-color: ${backgroundColor};
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);

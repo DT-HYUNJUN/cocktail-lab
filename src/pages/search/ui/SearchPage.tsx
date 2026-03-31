@@ -1,14 +1,17 @@
-import { Button, Chip, Container, Typography } from "@mui/material"
+import { Button, Chip, Container, Divider, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import ingreds from "../../../shared/i18n/ko/translation.json"
 import styled from "styled-components"
 import { useRecentSearchStore } from "../../../app/store"
 import { useQuery } from "@tanstack/react-query"
 import getCocktailByName from "../api/getCocktailByName"
-import Loading from "../../../shared/ui/Loading"
 import CocktailCard from "../../../shared/ui/cocktail/CocktailCard"
 import { useNavigate, useParams } from "react-router-dom"
 import { useRef, useState } from "react"
+import { Loading } from "../../../shared/ui"
+import getIngredientByName from "../api/getIngredientByName"
+import IngredientCard from "../../ingredient/ui/ingredient/IngredientCard"
+import IngredientSearchCard from "./IngredientSearchCard"
 
 const engPattern = /[a-zA-Z]/
 
@@ -22,9 +25,19 @@ const SearchPage = () => {
     resetRecentSearchValueList,
   } = useRecentSearchStore()
 
-  const { data, isLoading, isSuccess } = useQuery({
+  const { data, isFetching, isSuccess } = useQuery({
     queryKey: ["getCocktailByName", name],
     queryFn: () => getCocktailByName(checkName(name || "", "cocktail")),
+    enabled: !!name,
+  })
+
+  const {
+    data: iData,
+    isFetching: iLoading,
+    isSuccess: iSuccess,
+  } = useQuery({
+    queryKey: ["getIngredientByName", name],
+    queryFn: () => getIngredientByName(checkName(name || "", "cocktail")),
     enabled: !!name,
   })
 
@@ -83,7 +96,7 @@ const SearchPage = () => {
   }
 
   return (
-    <Container>
+    <div>
       <SearchSection>
         <RecentSearchHeader>
           <span>최근 검색어</span>
@@ -115,58 +128,77 @@ const SearchPage = () => {
           ))}
         </RecentSearchList>
       </SearchSection>
-      <ResultSection>
-        <div>
-          {isLoading ? (
-            <Loading />
-          ) : data?.drinks ? (
-            <CocktailList>
-              {data.drinks.map(drink => (
-                <CocktailCard key={drink.idDrink} cocktail={drink} />
-              ))}
-            </CocktailList>
-          ) : (
-            isSuccess && (
-              <ResultBox>
-                <ResultNameBox>
-                  <Typography color="primary" component="span" mr={1}>
-                    '{name}'
-                  </Typography>
-                  <Typography component="span">
-                    결과를 찾을 수 없어요.
-                  </Typography>
-                </ResultNameBox>
-                <Typography>
-                  정확한 검색을 원하실 경우 영어로 검색해주세요.
-                </Typography>
-              </ResultBox>
-            )
-          )}
-        </div>
-      </ResultSection>
-    </Container>
+      <Divider />
+      {iLoading && <Loading />}
+      {iData && iData.ingredients && (
+        <ResultSection>
+          <Typography variant="h5">재료</Typography>
+          <div>
+            {iData.ingredients && (
+              <CocktailList>
+                {iData.ingredients.map(ingred => (
+                  <IngredientSearchCard
+                    key={ingred.idIngredient}
+                    name={ingred.strIngredient}
+                  />
+                ))}
+              </CocktailList>
+            )}
+          </div>
+        </ResultSection>
+      )}
+      <Divider />
+      {isFetching && <Loading />}
+      {data && data.drinks && (
+        <ResultSection>
+          <Typography variant="h5">칵테일</Typography>
+          <div>
+            {data.drinks && (
+              <CocktailList>
+                {data.drinks.map(drink => (
+                  <CocktailCard key={drink.idDrink} cocktail={drink} />
+                ))}
+              </CocktailList>
+            )}
+          </div>
+        </ResultSection>
+      )}
+      {data?.drinks === null && iData?.ingredients === null && (
+        <ResultBox>
+          <ResultNameBox>
+            <Typography color="primary" component="span" mr={1}>
+              '{name}'
+            </Typography>
+            <Typography component="span">결과를 찾을 수 없어요.</Typography>
+          </ResultNameBox>
+          <Typography>
+            정확한 검색을 원하실 경우 영어로 검색해주세요.
+          </Typography>
+        </ResultBox>
+      )}
+    </div>
   )
 }
 
 export default SearchPage
 
 const SearchSection = styled("div")({
-  marginTop: 20,
+  paddingLeft: 16,
+  paddingRight: 16,
 })
 
 const RecentSearchHeader = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  marginTop: 20,
 })
 
 const RecentSearchList = styled("div")<{ $dragging?: boolean }>(
   ({ $dragging }) => ({
     display: "flex",
     gap: 8,
-    paddingTop: 12,
-    paddingBottom: 12,
+    paddingTop: 8,
+    paddingBottom: 8,
     overflow: "auto",
     whiteSpace: "nowrap",
     "&::-webkit-scrollbar": {
@@ -178,6 +210,9 @@ const RecentSearchList = styled("div")<{ $dragging?: boolean }>(
 
 const ResultSection = styled("section")({
   marginTop: 32,
+  marginBottom: 32,
+  paddingLeft: 16,
+  paddingRight: 16,
 })
 
 const CocktailList = styled("div")({

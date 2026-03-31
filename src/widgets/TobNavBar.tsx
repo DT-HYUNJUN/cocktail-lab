@@ -29,12 +29,13 @@ const Header = styled.header`
   position: fixed;
   top: 0;
   width: 480px;
-  height: 48px;
+  height: 40px;
   background-color: ${backgroundColor};
   display: flex;
-  gap: 24px;
+  gap: 12px;
   align-items: center;
   z-index: 1000;
+  padding-top: 4px;
   padding-left: 24px;
   padding-right: 24px;
   @media (max-width: 480px) {
@@ -45,15 +46,18 @@ const Header = styled.header`
 const LeftBox = styled("div")({
   display: "flex",
   justifyContent: "start",
+  alignItems: "center",
 })
 
 const CenterBox = styled("div")({
   display: "flex",
   justifyContent: "center",
   flexGrow: 1,
+  alignItems: "center",
 })
 
 const RightBox = styled("div")({
   display: "flex",
   justifyContent: "end",
+  alignItems: "center",
 })

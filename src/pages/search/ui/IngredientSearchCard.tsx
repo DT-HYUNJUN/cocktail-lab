@@ -1,33 +1,35 @@
 import styled from "styled-components"
-import type { CocktailCardType } from "../../../entities/drink/model/types"
 import { useNavigate } from "react-router-dom"
-import { aperolOrange } from "../../color/color"
+import { aperolOrange } from "../../../shared/color/color"
 
-interface CocktailCardProps {
-  cocktail: CocktailCardType
+interface IngredientSearchCardProps {
+  name: string
 }
 
-const CocktailCard = ({ cocktail }: CocktailCardProps) => {
+const IngredientSearchCard = ({ name }: IngredientSearchCardProps) => {
   const navigate = useNavigate()
 
-  const handleClickCard = (idDrink: string) => {
-    navigate(`/cocktail/${idDrink}`)
+  const handleClickCard = () => {
+    navigate(`/ingredient/${name}`)
   }
 
   return (
-    <Card onClick={() => handleClickCard(cocktail.idDrink)}>
+    <Card onClick={handleClickCard}>
       <ImageWrapper>
-        <Image src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />
+        <Image
+          src={`https://www.thecocktaildb.com/images/ingredients/${name}-Medium.png`}
+          alt={name}
+        />
         <Overlay />
       </ImageWrapper>
       <Content>
-        <Title>{cocktail.strDrink}</Title>
+        <Title>{name}</Title>
       </Content>
     </Card>
   )
 }
 
-export default CocktailCard
+export default IngredientSearchCard
 
 export const Card = styled.div`
   padding-top: 24px;

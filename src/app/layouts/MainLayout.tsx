@@ -3,6 +3,7 @@ import TobNavBar from "../../widgets/TobNavBar"
 import BottomNavbar from "../../widgets/BottomNavbar"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import styled from "styled-components"
 import SearchBar from "../../widgets/SearchBar"
 import { type ChangeEvent, useRef, useState } from "react"
@@ -38,12 +39,12 @@ const MyButton = () => {
   const navigate = useNavigate()
 
   const handleClickMy = () => {
-    navigate("/mybar")
+    navigate("/search")
   }
 
   return (
     <ButtonBox onClick={handleClickMy}>
-      <AccountCircleOutlinedIcon />
+      <SearchOutlinedIcon />
     </ButtonBox>
   )
 }

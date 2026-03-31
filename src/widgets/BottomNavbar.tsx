@@ -1,19 +1,19 @@
-import { Box, Typography, styled } from "@mui/material"
+import { Typography, styled } from "@mui/material"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import LocalBarOutlinedIcon from "@mui/icons-material/LocalBarOutlined"
 import LiquorOutlinedIcon from "@mui/icons-material/LiquorOutlined"
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { curasoBlue } from "../shared/color/color"
 
+type Path = "/" | "/cocktail" | "/ingredient"
+
 const BottomNavbar = () => {
-  const [effectPosition, setEffectPositino] = useState<{
+  const [effectPosition, setEffectPosition] = useState<{
     left: number
     width: number
   } | null>(null)
-  const [pathValue, setPathValue] = useState("")
+  const [pathValue, setPathValue] = useState<Path>("/")
 
   const { pathname } = useLocation()
 
@@ -25,29 +25,27 @@ const BottomNavbar = () => {
     const index =
       pathname === "/"
         ? 0
-        : pathname.startsWith("/cocktail") || pathname.startsWith("/ingredient")
+        : pathname.startsWith("/cocktail")
           ? 1
-          : pathname.startsWith("/search")
+          : pathname.startsWith("/ingredient")
             ? 2
-            : pathname.startsWith("/mybar")
-              ? 3
-              : 0
+            : 3
 
     const target = iconRefs.current[index]
     if (!target) return
 
-    setEffectPositino({
+    setEffectPosition({
       left: target.offsetLeft,
       width: target.offsetWidth,
     })
   }, [pathname])
 
   useEffect(() => {
-    setPathValue(pathname)
+    setPathValue(pathname as Path)
   }, [pathname])
 
-  const handleClickIcon = (path: string) => {
-    navigate(`/${path}`)
+  const handleClickIcon = (path: Path) => {
+    navigate(path)
   }
 
   return (
@@ -57,7 +55,7 @@ const BottomNavbar = () => {
       )}
 
       <PathBox
-        onClick={() => handleClickIcon("")}
+        onClick={() => handleClickIcon("/")}
         ref={el => (iconRefs.current[0] = el)}
       >
         <HomeOutlinedIcon sx={{ fontSize: 24 }} />
@@ -69,43 +67,27 @@ const BottomNavbar = () => {
         </Typography>
       </PathBox>
       <PathBox
-        onClick={() => handleClickIcon("cocktail")}
+        onClick={() => handleClickIcon("/cocktail")}
         ref={el => (iconRefs.current[1] = el)}
       >
         <LocalBarOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
           variant="caption"
-          color={
-            pathValue.includes("/cocktail") || pathValue.includes("/ingredient")
-              ? "black"
-              : "grey"
-          }
+          color={pathValue.includes("/cocktail") ? "black" : "grey"}
         >
           칵테일
         </Typography>
       </PathBox>
       <PathBox
-        onClick={() => handleClickIcon("search")}
+        onClick={() => handleClickIcon("/ingredient")}
         ref={el => (iconRefs.current[2] = el)}
       >
-        <SearchOutlinedIcon sx={{ fontSize: 24 }} />
+        <LiquorOutlinedIcon sx={{ fontSize: 24 }} />
         <Typography
           variant="caption"
-          color={pathValue.includes("/search") ? "black" : "grey"}
+          color={pathValue === "/ingredient" ? "black" : "grey"}
         >
-          검색
-        </Typography>
-      </PathBox>
-      <PathBox
-        onClick={() => handleClickIcon("mybar")}
-        ref={el => (iconRefs.current[3] = el)}
-      >
-        <AccountCircleOutlinedIcon sx={{ fontSize: 24 }} />
-        <Typography
-          variant="caption"
-          color={pathValue === "/mybar" ? "black" : "grey"}
-        >
-          마이 바
+          재료
         </Typography>
       </PathBox>
     </Nav>
@@ -115,7 +97,7 @@ const BottomNavbar = () => {
 export default BottomNavbar
 
 const Nav = styled("footer")({
-  width: 314,
+  width: 234,
   height: 52,
   boxSizing: "border-box",
   position: "fixed",
