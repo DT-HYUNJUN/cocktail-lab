@@ -1,10 +1,11 @@
-import { Typography, styled } from "@mui/material"
+import { Typography } from "@mui/material"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import LocalBarOutlinedIcon from "@mui/icons-material/LocalBarOutlined"
 import LiquorOutlinedIcon from "@mui/icons-material/LiquorOutlined"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { curasoBlue } from "../shared/color/color"
+import styled from "styled-components"
 
 type Path = "/" | "/cocktail" | "/ingredient"
 
@@ -96,24 +97,34 @@ const BottomNavbar = () => {
 
 export default BottomNavbar
 
-const Nav = styled("footer")({
-  width: 234,
-  height: 52,
-  boxSizing: "border-box",
-  position: "fixed",
-  backgroundColor: "white",
-  bottom: 15,
-  left: 0,
-  right: 0,
-  margin: "0 auto",
-  zIndex: 100,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: 4,
-  boxShadow: "rgba(0, 0, 0, 0.2) 0px 2px 6px",
-  borderRadius: "6.25rem",
-})
+const Nav = styled("footer")`
+  width: 234px;
+  height: 52px;
+  box-sizing: border-box;
+  position: fixed;
+  background-color: white;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
+  border-radius: 6.25rem;
+
+  /* 태블릿 */
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  /* PC */
+  @media (min-width: 1024px) {
+    display: none;
+  }
+`
 
 const PathBox = styled("div")({
   display: "flex",

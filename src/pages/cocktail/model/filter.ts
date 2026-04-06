@@ -1,4 +1,4 @@
-import { Alcohol, Category, Glass, Ingredient } from "../assets"
+import { Alcohol, Category, Glass } from "../assets"
 import type { FilterItem, CocktailFilter } from "./types"
 
 const categoryList: FilterItem[] = [

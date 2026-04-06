@@ -37,14 +37,17 @@ const FixedTab = styled.div`
   border-bottom: 1px solid #dedede;
   position: fixed;
   top: 40px;
-  width: 480px;
+  width: 100%;
   z-index: 100;
   background-color: ${backgroundColor};
 
-  @media (max-width: 480px) {
-    width: 100%;
+  @media (min-width: 768px) {
+    position: unset;
   }
 `
-const ListContainer = styled("div")({
-  marginTop: 42,
-})
+const ListContainer = styled("div")`
+  margin-top: 42px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+`

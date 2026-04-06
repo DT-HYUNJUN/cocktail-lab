@@ -1,4 +1,4 @@
-import { Container } from "@mui/material"
+import { Container, Divider, Grid, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
 import { aperolOrange, backgroundColor } from "../../../shared/color/color"
@@ -66,11 +66,13 @@ const CocktailPage = () => {
     setCurrentFilterItemIndex(0)
   }
 
-  const handleClickFilterItem = (index: number, filterItem: string) => {
-    if (filterItem === "more") {
-      navigate("/cocktail/ingredient")
-    } else {
-      setCurrentFilterItemIndex(index)
+  const handleClickFilterItem = (
+    index: number,
+    currentFilter?: FilterValue,
+  ) => {
+    setCurrentFilterItemIndex(index)
+    if (currentFilter) {
+      setCurrentFilter(currentFilter)
     }
   }
 
@@ -84,6 +86,38 @@ const CocktailPage = () => {
 
   return (
     <>
+      {/* PC 버전 필터 */}
+      <WideFilterSection>
+        {cocktailFilterList.map(filter => (
+          <WideFilterBox key={filter.value}>
+            <WideFilterMenu>
+              <Typography variant="body2">{filter.label}</Typography>
+            </WideFilterMenu>
+            <WideFilterItems>
+              {filter.itemList.map((item, index) => (
+                <FilterBox key={item.value}>
+                  <FilterIconLabel
+                    onClick={() => handleClickFilterItem(index, filter.value)}
+                  >
+                    <Typography
+                      color={
+                        currentFilterItemIndex === index &&
+                        currentFilter === filter.value
+                          ? "primary"
+                          : "default"
+                      }
+                      variant="body2"
+                    >
+                      {item.label}
+                    </Typography>
+                  </FilterIconLabel>
+                </FilterBox>
+              ))}
+            </WideFilterItems>
+          </WideFilterBox>
+        ))}
+      </WideFilterSection>
+      {/* 모바일 버전 필터 */}
       <FilterMenu>
         {filterEffectPosition && (
           <FilterMenuIconEffect
@@ -113,7 +147,7 @@ const CocktailPage = () => {
                 <FilterBox key={item.value}>
                   <FilterIcon
                     selected={index === currentFilterItemIndex}
-                    onClick={() => handleClickFilterItem(index, item.value)}
+                    onClick={() => handleClickFilterItem(index)}
                   >
                     {currentFilter === "i" ? (
                       <FilterIngredImg
@@ -140,7 +174,7 @@ const CocktailPage = () => {
         <Loading />
       ) : (
         cocktails && (
-          <Container>
+          <div>
             <SearchBox>
               <SearchForm>
                 <SearchIcon color="action" fontSize="small" />
@@ -153,19 +187,25 @@ const CocktailPage = () => {
               </SearchForm>
             </SearchBox>
             <CocktailSection>
-              {cocktails.filter(cocktail =>
-                cocktail.strDrink.includes(searchValue),
-              ).length ? (
-                cocktails
-                  .filter(cocktail => cocktail.strDrink.includes(searchValue))
-                  .map(cocktail => (
-                    <CocktailCard key={cocktail.idDrink} cocktail={cocktail} />
-                  ))
-              ) : (
-                <InfoBox>찾으시는 칵테일이 없습니다.</InfoBox>
-              )}
+              <Grid container spacing={{ xs: 3, md: 6 }}>
+                {cocktails.filter(cocktail =>
+                  cocktail.strDrink.includes(searchValue),
+                ).length ? (
+                  cocktails
+                    .filter(cocktail => cocktail.strDrink.includes(searchValue))
+                    .map(cocktail => (
+                      <Grid key={cocktail.idDrink} size={{ xs: 6, md: 3 }}>
+                        <CocktailCard cocktail={cocktail} />
+                      </Grid>
+                    ))
+                ) : (
+                  <Grid size={12}>
+                    <InfoBox>찾으시는 칵테일이 없습니다.</InfoBox>
+                  </Grid>
+                )}
+              </Grid>
             </CocktailSection>
-          </Container>
+          </div>
         )
       )}
     </>
@@ -179,6 +219,9 @@ const FilterSection = styled("section")({
   alignItems: "center",
   padding: "20px 24px",
   borderBottom: "1px solid #ebebeb",
+  "@media (min-width: 768px)": {
+    display: "none",
+  },
 })
 
 const FilterCollapse = styled("div")<{ expand: boolean }>(({ expand }) => ({
@@ -203,6 +246,9 @@ const FilterMenu = styled("div")({
   paddingTop: 0,
   backgroundColor: backgroundColor,
   zIndex: 100,
+  "@media (min-width: 768px)": {
+    display: "none",
+  },
 })
 
 const FilterMenuIconEffect = styled("div")<{
@@ -262,8 +308,8 @@ const FilterIconImg = styled("img")({
 })
 
 const FilterIngredImg = styled("img")({
-  width: 36,
-  height: 36,
+  width: 32,
+  height: 32,
 })
 
 const FilterIconLabel = styled("span")({
@@ -271,16 +317,21 @@ const FilterIconLabel = styled("span")({
 })
 
 const CocktailSection = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: 24,
   marginTop: 20,
+  padding: "0 16px",
+  "@media (min-width: 768px)": {
+    padding: 0,
+  },
 })
 
 const SearchBox = styled("div")({
   marginTop: 8,
   display: "flex",
   justifyContent: "right",
+  padding: "0 16px",
+  "@media (min-width: 768px)": {
+    padding: 0,
+  },
 })
 
 const SearchForm = styled("form")({
@@ -300,7 +351,6 @@ const SearchInput = styled("input")({
 })
 
 const InfoBox = styled("div")({
-  gridColumn: "1 / -1",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -315,4 +365,37 @@ const ButtonBox = styled("div")({
   bottom: 1,
   cursor: "pointer",
   color: aperolOrange[700],
+})
+
+const WideFilterSection = styled("div")`
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+    border: 1px solid #0000001f;
+    border-bottom: 0;
+    margin-bottom: 40px;
+  }
+`
+
+const WideFilterBox = styled("div")({
+  display: "grid",
+  gridTemplateColumns: "1fr 11fr",
+  borderBottom: "1px solid #0000001f",
+})
+
+const WideFilterMenu = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "10px 8px",
+  borderRight: "1px solid #0000001f",
+})
+
+const WideFilterItems = styled("div")({
+  display: "flex",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "left",
+  gap: 16,
+  padding: "10px 8px",
 })

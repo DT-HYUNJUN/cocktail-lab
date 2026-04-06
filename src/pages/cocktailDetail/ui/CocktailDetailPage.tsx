@@ -26,10 +26,6 @@ const CocktailDetailPage = () => {
     navigate(`/ingredient/${strIngredient}`)
   }
 
-  const handleClickGlass = (strGlass: string) => {
-    navigate(`/cocktail/g/${strGlass}`)
-  }
-
   const handleClickShare = (idDrink: string, strDrink: string) => {
     if (navigator.share) {
       navigator.share({
@@ -60,96 +56,102 @@ const CocktailDetailPage = () => {
   ) : (
     cocktail && (
       <Container>
-        {/* 칵테일 이미지 */}
-        <ImageSection>
-          <DrinkImage src={cocktail.strDrinkThumb} />
-        </ImageSection>
+        <Wrapper>
+          {/* 칵테일 이미지 */}
+          <ImageSection>
+            <DrinkImage src={cocktail.strDrinkThumb} />
+          </ImageSection>
 
-        {/* 칵테일 정보 */}
-        <ContentSection>
-          {cocktail.strTags && (
-            <TagBox>
-              {cocktail.strTags.split(",").map(tag => (
-                <Tag key={tag}>{tag.toUpperCase()}</Tag>
-              ))}
-            </TagBox>
-          )}
-          <CocktailNameBox>
-            <CocktailName>{cocktail.strDrink}</CocktailName>
-            <IconButton
-              onClick={() =>
-                handleClickShare(cocktail.idDrink, cocktail.strDrink)
-              }
-              size="small"
-              color="primary"
-            >
-              <LinkIcon fontSize="small" />
-            </IconButton>
-          </CocktailNameBox>
-          <CategoryWrapper>
-            <CategoryBox onClick={() => handleClickGlass(cocktail.strGlass)}>
-              <CategoryImage>
-                <span>🍸</span>
-              </CategoryImage>
-              <CategoryContentBox>
-                <CategoryContentTitle>글래스</CategoryContentTitle>
-                <CategoryContentSubTitle>
-                  {cocktail.strGlass}
-                </CategoryContentSubTitle>
-              </CategoryContentBox>
-            </CategoryBox>
-          </CategoryWrapper>
-        </ContentSection>
-
-        {/* 재료 */}
-        <IngredientSection>
-          <TitleBox>
-            <SectionTitle>재료</SectionTitle>
-          </TitleBox>
-          <ListWrapper>
-            <IngredientList>
-              {ingredients.map(
-                ingred =>
-                  ingred && (
-                    <IngredientListItem key={ingred.ingredient}>
-                      <IngredientImageBox
-                        onClick={() => handleClickIngredient(ingred.ingredient)}
-                      >
-                        <IngredImage
-                          src={`https://www.thecocktaildb.com/images/ingredients/${ingred.ingredient}-Small.png`}
-                          alt={ingred.ingredient}
-                        />
-                        <IngredientContentText>
-                          {ingred.ingredient}
-                        </IngredientContentText>
-                      </IngredientImageBox>
-                      <IngredientMeasuerText>
-                        {ingred.measure}
-                      </IngredientMeasuerText>
-                    </IngredientListItem>
-                  ),
+          <ContentSection>
+            {/* 칵테일 정보 */}
+            <div>
+              {cocktail.strTags && (
+                <TagBox>
+                  {cocktail.strTags.split(",").map(tag => (
+                    <Tag key={tag}>{tag.toUpperCase()}</Tag>
+                  ))}
+                </TagBox>
               )}
-            </IngredientList>
-          </ListWrapper>
-        </IngredientSection>
+              <CocktailNameBox>
+                <CocktailName>{cocktail.strDrink}</CocktailName>
+                <IconButton
+                  onClick={() =>
+                    handleClickShare(cocktail.idDrink, cocktail.strDrink)
+                  }
+                  size="small"
+                  color="primary"
+                >
+                  <LinkIcon fontSize="small" />
+                </IconButton>
+              </CocktailNameBox>
+              <CategoryWrapper>
+                <CategoryBox>
+                  <CategoryImage>
+                    <span>🍸</span>
+                  </CategoryImage>
+                  <CategoryContentBox>
+                    <CategoryContentTitle>글래스</CategoryContentTitle>
+                    <CategoryContentSubTitle>
+                      {cocktail.strGlass}
+                    </CategoryContentSubTitle>
+                  </CategoryContentBox>
+                </CategoryBox>
+              </CategoryWrapper>
+            </div>
 
-        {/* 레시피 */}
-        <Box mt={4}>
-          <SectionTitle>만드는 방법</SectionTitle>
-          <ListWrapper>
-            <RecipeList>
-              {cocktail.strInstructions.split(/[.!]/).map(
-                (inst, index) =>
-                  inst && (
-                    <RecipeListItem key={inst}>
-                      <RecipeListIndex>{index + 1}</RecipeListIndex>
-                      <RecipeText>{inst}</RecipeText>
-                    </RecipeListItem>
-                  ),
-              )}
-            </RecipeList>
-          </ListWrapper>
-        </Box>
+            {/* 재료 */}
+            <IngredientSection>
+              <TitleBox>
+                <SectionTitle>재료</SectionTitle>
+              </TitleBox>
+              <ListWrapper>
+                <IngredientList>
+                  {ingredients.map(
+                    ingred =>
+                      ingred && (
+                        <IngredientListItem key={ingred.ingredient}>
+                          <IngredientImageBox
+                            onClick={() =>
+                              handleClickIngredient(ingred.ingredient)
+                            }
+                          >
+                            <IngredImage
+                              src={`https://www.thecocktaildb.com/images/ingredients/${ingred.ingredient}-Small.png`}
+                              alt={ingred.ingredient}
+                            />
+                            <IngredientContentText>
+                              {ingred.ingredient}
+                            </IngredientContentText>
+                          </IngredientImageBox>
+                          <IngredientMeasuerText>
+                            {ingred.measure}
+                          </IngredientMeasuerText>
+                        </IngredientListItem>
+                      ),
+                  )}
+                </IngredientList>
+              </ListWrapper>
+            </IngredientSection>
+
+            {/* 레시피 */}
+            <div>
+              <SectionTitle>만드는 방법</SectionTitle>
+              <ListWrapper>
+                <RecipeList>
+                  {cocktail.strInstructions.split(/[.!]/).map(
+                    (inst, index) =>
+                      inst && (
+                        <RecipeListItem key={inst}>
+                          <RecipeListIndex>{index + 1}</RecipeListIndex>
+                          <RecipeText>{inst}</RecipeText>
+                        </RecipeListItem>
+                      ),
+                  )}
+                </RecipeList>
+              </ListWrapper>
+            </div>
+          </ContentSection>
+        </Wrapper>
       </Container>
     )
   )
@@ -157,12 +159,17 @@ const CocktailDetailPage = () => {
 
 export default CocktailDetailPage
 
-const DrinkImage = styled("img")({
-  width: "100%",
-  height: "100%",
-  borderRadius: 24,
-  boxShadow: "rgb(0 0 0 / 0.25) 0 25px 50px -12px ",
-})
+const DrinkImage = styled("img")`
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  box-shadow: rgb(0 0 0 / 0.25) 0 25px 50px -12px;
+
+  @media (min-width: 768px) {
+    width: 400px;
+    height: 400px;
+  }
+`
 
 const IngredImage = styled("img")({
   width: 32,
@@ -177,7 +184,9 @@ const ImageSection = styled(Box)({
 })
 
 const ContentSection = styled(Box)({
-  marginTop: 40,
+  display: "flex",
+  flexDirection: "column",
+  gap: 20,
 })
 
 const TagBox = styled(Box)({
@@ -205,15 +214,11 @@ const CocktailName = styled("h1")({
 const CategoryWrapper = styled("div")({
   display: "flex",
   gap: 8,
-  paddingBottom: 24,
-  marginBottom: 24,
-  borderBottom: "1px solid  oklch(.92 .01 260)",
 })
 
 const CategoryBox = styled("div")({
   display: "flex",
   gap: 8,
-  cursor: "pointer",
 })
 
 const CategoryImage = styled("div")({
@@ -339,3 +344,16 @@ const TitleBox = styled("div")({
   justifyContent: "space-between",
   alignItems: "center",
 })
+
+const Wrapper = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    gap: 80px;
+  }
+`

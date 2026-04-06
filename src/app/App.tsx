@@ -29,26 +29,29 @@ const App = () => {
 
 export default App
 
-const PageBackground = styled.div`
-  min-height: 100dvh;
-  background-color: #f0f0f0; /* 카드 바깥 배경 */
-
-  @media (max-width: 480px) {
-    background-color: ${backgroundColor};
-  }
-`
+const PageBackground = styled.div``
 
 const Wrap = styled.div`
   position: relative;
-  max-width: 480px;
+  /* max-width: 480px; */
   min-height: 100dvh;
   margin: 0 auto;
   padding-top: 44px;
   padding-bottom: 100px;
-  background-color: ${backgroundColor};
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  /* background-color: ${backgroundColor}; */
+  /* box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); */
 
   @media (max-width: 480px) {
     box-shadow: none;
+  }
+
+  /* 태블릿 */
+  @media (min-width: 768px) {
+    /* max-width: 768px; */
+  }
+
+  /* PC */
+  @media (min-width: 1024px) {
+    max-width: 1280px;
   }
 `

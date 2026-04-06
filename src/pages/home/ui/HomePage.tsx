@@ -1,4 +1,4 @@
-import { Button, Chip, Container, styled, Typography } from "@mui/material"
+import { Button, Chip, Divider, Grid, styled, Typography } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
 import { getRandomCocktail } from "../api/getRandomCocktail"
 import CocktailCardH from "../../../shared/ui/cocktail/CocktailCardH"
@@ -9,7 +9,6 @@ import type { GetCocktailByFilterPayload } from "../model/types"
 import getCocktailByFilter from "../api/getCocktailByFilter"
 import CocktailCard from "../../../shared/ui/cocktail/CocktailCard"
 import { aperolOrange } from "../../../shared/color/color"
-import { Loading } from "../../../shared/ui"
 
 const HomePage = () => {
   const [filterPayload, setFilterPayload] =
@@ -59,7 +58,7 @@ const HomePage = () => {
   }
 
   return (
-    <Container>
+    <div>
       <RandomCocktailSection>
         <TitleBox>
           <Typography variant="h4">오늘의 추천</Typography>
@@ -79,6 +78,7 @@ const HomePage = () => {
           />
         )}
       </RandomCocktailSection>
+      <Divider />
       <CategorySection>
         <Typography variant="h4">카테고리</Typography>
         <CategoryMenu>
@@ -104,19 +104,17 @@ const HomePage = () => {
         </CategoryMenu>
 
         <CategoryList>
-          {isFetching ? (
-            <Loading />
-          ) : (
-            filterCocktailList &&
-            filterCocktailList
-              .slice(0, 10)
-              .map(cocktail => (
-                <CocktailCard key={cocktail.strDrink} cocktail={cocktail} />
-              ))
-          )}
+          <Grid container spacing={{ xs: 3, md: 6 }}>
+            {filterCocktailList &&
+              filterCocktailList.slice(0, 10).map(cocktail => (
+                <Grid size={{ xs: 6, md: 3 }} key={cocktail.strDrink}>
+                  {<CocktailCard cocktail={cocktail} />}
+                </Grid>
+              ))}
+          </Grid>
         </CategoryList>
       </CategorySection>
-    </Container>
+    </div>
   )
 }
 
@@ -124,12 +122,21 @@ export default HomePage
 
 const RandomCocktailSection = styled("section")({
   marginBottom: 60,
+  padding: "0 16px",
+  "@media (min-width: 768px)": {
+    padding: 0,
+  },
 })
 
 const CategorySection = styled("section")({
+  marginTop: 32,
   display: "flex",
   flexDirection: "column",
   gap: 12,
+  padding: "0 16px",
+  "@media (min-width: 768px)": {
+    padding: 0,
+  },
 })
 
 const TitleBox = styled("div")({
@@ -147,9 +154,8 @@ const CategoryMenu = styled("div")({
 })
 
 const CategoryList = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: 24,
+  display: "flex",
+  justifyContent: "center",
 })
 
 const SelectedChip = styled(Chip)({

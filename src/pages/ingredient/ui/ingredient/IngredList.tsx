@@ -8,7 +8,6 @@ import {
   Drawer,
   Grid,
   IconButton,
-  styled,
   Typography,
 } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close"
@@ -39,6 +38,7 @@ import {
 import FilterChip from "./FilterChip"
 import { useIngredientStore } from "../../../../app/store"
 import { ingredientData } from "../../../../entities/ingredient/model/localIngredient/ingredient.data"
+import styled from "styled-components"
 
 const IngredList = () => {
   const [open, setOpen] = useState(false)
@@ -225,7 +225,7 @@ const IngredList = () => {
           />
         </Badge>
       </FilterHeader>
-      <Container>
+      <ListContainer>
         <ListHeader>
           <Typography fontSize={14} variant="body2">
             총 {filteredIngredients.length}개
@@ -237,7 +237,7 @@ const IngredList = () => {
             <KeyboardArrowDownIcon fontSize="small" />
           </SortButtonBox>
         </ListHeader>
-        <Grid container spacing={2} rowSpacing={4}>
+        <Grid container spacing={{ xs: 3, md: 6 }} rowSpacing={4}>
           {result.length === 0 ? (
             <EmptyResult>
               <Typography variant="body2">
@@ -247,13 +247,14 @@ const IngredList = () => {
             </EmptyResult>
           ) : (
             result.map(ingred => (
-              <Grid size={{ xs: 6, sm: 4 }} key={ingred.name}>
+              <Grid size={{ xs: 6, md: 3 }} key={ingred.name}>
                 <IngredientCard ingred={ingred} />
               </Grid>
             ))
           )}
         </Grid>
-      </Container>
+      </ListContainer>
+
       {/* 필터 */}
       <Drawer open={open} onClose={handleApplyFilter} anchor="bottom">
         <FilterDrawer>
@@ -444,19 +445,28 @@ const FilterHeader = styled("div")({
 const FilterDrawer = styled("div")`
   display: flex;
   justify-content: center;
-  width: 480px;
+  width: 100%;
   height: 82vh;
   padding-top: 20px;
 
-  @media (max-width: 480px) {
+  @media (min-width: 768px) {
+    box-sizing: border-box;
     width: 100%;
-    height: 82vh;
+    height: auto;
+  }
+
+  @media (min-width: 1920px) {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    padding: 0 500px;
   }
 `
 
 const DrawerBox = styled("div")({
   backgroundColor: "#FFF",
   width: "100%",
+  "@media (min-width: 768px)": {},
 })
 
 const ButtonBox = styled("div")({
@@ -602,4 +612,14 @@ const ContentBox = styled("div")`
   overflow-y: auto;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
+  @media (min-width: 768px) {
+    height: auto;
+  }
 `
+
+const ListContainer = styled("div")({
+  padding: "0 16px",
+  "@media (min-width: 768px)": {
+    padding: "0",
+  },
+})

@@ -32,10 +32,12 @@ export const useRandomCocktailStore = create<
 
 // 최근 검색어
 type RecentSearchState = {
+  searchValue: string
   recentSearchValueList: string[]
 }
 
 type RecentSearchAction = {
+  updateSearchValue: (searchValue: string) => void
   addRecentSearchValueList: (searchValue: string) => void
   deleteRecentSearchValueList: (searchValue: string) => void
   resetRecentSearchValueList: () => void
@@ -46,7 +48,9 @@ export const useRecentSearchStore = create<
 >()(
   persist(
     (set, get) => ({
+      searchValue: "",
       recentSearchValueList: [],
+      updateSearchValue: searchValue => set({ searchValue }),
       addRecentSearchValueList: (searchValue: string) =>
         set(state => ({
           recentSearchValueList: state.recentSearchValueList.includes(

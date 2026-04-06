@@ -2,20 +2,15 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import TobNavBar from "../../widgets/TobNavBar"
 import BottomNavbar from "../../widgets/BottomNavbar"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import styled from "styled-components"
 import SearchBar from "../../widgets/SearchBar"
 import { type ChangeEvent, useRef, useState } from "react"
 import { useRecentSearchStore } from "../store"
-
-/**
- * TODO:
- * HOME
- * - 최근 본 칵테일 리스트
- * - TopNav 홈 텍스트 변경
- * - 랜덤 카드 chip 클릭 비활성
- */
+import { aperolOrange } from "../../shared/color/color"
+import Logo from "../../shared/assets/icon/cocktail_lab.png"
+import { Divider, Typography } from "@mui/material"
+import ScrollButton from "../../widgets/ScrollButton"
 
 const BackButton = () => {
   const navigate = useNavigate()
@@ -29,10 +24,6 @@ const BackButton = () => {
       <ArrowBackIcon fontSize="small" />
     </ButtonBox>
   )
-}
-
-const HomeButton = () => {
-  return <div>홈</div>
 }
 
 const MyButton = () => {
@@ -89,17 +80,80 @@ const Blank = () => {
 }
 
 const MainLayout = () => {
-  const location = useLocation()
-  const isHome = location.pathname === "/"
-  const isSearch = location.pathname.includes("/search")
+  const [value, setValue] = useState("")
+  const navigate = useNavigate()
+
+  const updateSearchValue = useRecentSearchStore(
+    state => state.updateSearchValue,
+  )
+
+  const { pathname } = useLocation()
+  const isHome = pathname === "/"
+  const isSearch = pathname.includes("/search")
+
+  const handleSubmitSearch = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    updateSearchValue(value)
+    navigate(`/search/${value}`)
+  }
+
+  const handleClickLink = (pathname: string) => {
+    navigate(pathname)
+  }
 
   return (
     <>
       <TobNavBar
-        left={isHome ? HomeButton : BackButton}
+        left={isHome ? Blank : BackButton}
         center={isSearch ? SearchSection : Blank}
         right={MyButton}
       />
+      <WideContainer>
+        <Header>
+          <LogoBox>
+            <LogoIcon src={Logo} alt="cocktail_lab_logo" />
+            <Typography variant="h4" color="primary" fontWeight={900}>
+              Cocktail Lab
+            </Typography>
+          </LogoBox>
+          <SearchBar
+            inputValue={value}
+            handleInputSearch={e => setValue(e.target.value)}
+            handleSubmitSearch={handleSubmitSearch}
+            placeholder="칵테일 또는 재료 검색"
+          />
+        </Header>
+        <MenuBar>
+          <MenuList>
+            <MenuItem>
+              <MenuLink
+                onClick={() => handleClickLink("/")}
+                $selected={pathname === "/"}
+              >
+                홈
+              </MenuLink>
+            </MenuItem>
+            <MenuItem>
+              <MenuLink
+                onClick={() => handleClickLink("/cocktail")}
+                $selected={pathname.includes("/cocktail")}
+              >
+                칵테일
+              </MenuLink>
+            </MenuItem>
+            <MenuItem>
+              <MenuLink
+                onClick={() => handleClickLink("/ingredient")}
+                $selected={pathname.includes("/ingredient")}
+              >
+                재료
+              </MenuLink>
+            </MenuItem>
+          </MenuList>
+        </MenuBar>
+        <Divider />
+      </WideContainer>
+      <ScrollButton />
       <Outlet />
       <BottomNavbar />
     </>
@@ -110,4 +164,65 @@ export default MainLayout
 
 const ButtonBox = styled("div")({
   cursor: "pointer",
+})
+
+const WideContainer = styled("div")`
+  @media (max-width: 480px) {
+    display: none;
+  }
+
+  /* 태블릿 */
+  @media (min-width: 768px) {
+    display: block;
+    margin-bottom: 32px;
+  }
+`
+
+const MenuBar = styled("div")`
+  height: 30px;
+  padding: 10px 0 16px;
+`
+
+const MenuList = styled("ul")`
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
+
+const MenuItem = styled("li")`
+  padding: 0 8px;
+  vertical-align: top;
+`
+
+const MenuLink = styled("div")<{ $selected: boolean }>`
+  cursor: pointer;
+  font-weight: 500;
+  padding: 8px 0 4px;
+  color: ${props => (props.$selected ? aperolOrange[400] : "#000")};
+  border-bottom: ${props =>
+    props.$selected ? `2px solid ${aperolOrange[400]}` : "none"};
+  &:hover {
+    color: ${aperolOrange[400]};
+    border-bottom: 2px solid ${aperolOrange[400]};
+  }
+`
+
+// PC 화면
+const Header = styled("div")`
+  display: grid;
+  grid-template-columns: 2fr 4fr 6fr;
+  align-items: center;
+  margin-bottom: 16px;
+`
+
+const LogoIcon = styled("img")({
+  width: 28,
+  height: 28,
+})
+
+const LogoBox = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
 })

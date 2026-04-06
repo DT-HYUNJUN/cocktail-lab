@@ -28,7 +28,7 @@ const Header = styled.header`
   box-sizing: border-box;
   position: fixed;
   top: 0;
-  width: 480px;
+  width: 100%;
   height: 40px;
   background-color: ${backgroundColor};
   display: flex;
@@ -38,9 +38,15 @@ const Header = styled.header`
   padding-top: 4px;
   padding-left: 24px;
   padding-right: 24px;
-  @media (max-width: 480px) {
-    width: 100%;
+
+  /* 태블릿 */
+  @media screen and (min-width: 768px) {
+    display: none;
   }
+
+  /* @media (min-width: 1024px) {
+    display: none;
+  } */
 `
 
 const LeftBox = styled("div")({

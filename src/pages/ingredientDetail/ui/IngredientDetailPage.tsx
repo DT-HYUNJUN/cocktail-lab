@@ -201,9 +201,9 @@ const IngredientDetailPage = () => {
                 ({cocktailList.length})
               </Typography>
             </HeaderText>
-            <Grid container spacing={2}>
+            <Grid container spacing={{ xs: 3, md: 6 }}>
               {cocktailList.map(cocktail => (
-                <Grid key={cocktail.idDrink} size={6}>
+                <Grid key={cocktail.idDrink} size={{ xs: 6, md: 3 }}>
                   <CocktailCard cocktail={cocktail} />
                 </Grid>
               ))}
@@ -225,11 +225,20 @@ const ImageBox = styled("div")({
   alignItems: "center",
   justifyContent: "center",
   borderRadius: borderRadius,
+
+  "@media (min-width: 768px)": {
+    width: 400,
+    height: 400,
+  },
 })
 
 const IngredientImage = styled("img")({
   width: 180,
   height: 180,
+  "@media (min-width: 768px)": {
+    width: 380,
+    height: 380,
+  },
 })
 
 const IngredientBox = styled("div")({
