@@ -1,0 +1,6 @@
+export { default as Rum } from "./rum.png"
+export { default as Gin } from "./gin.png"
+export { default as Vodka } from "./vodka.png"
+export { default as Whiskey } from "./whiskey.png"
+export { default as Tequila } from "./tequila.png"
+export { default as Brandy } from "./brandy.png"

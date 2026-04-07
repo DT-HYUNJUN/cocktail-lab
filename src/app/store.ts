@@ -1,55 +1,126 @@
-/// <reference types="redux-persist/types" />
-import type { Action, ThunkAction } from "@reduxjs/toolkit"
-import { configureStore } from "@reduxjs/toolkit"
-import { setupListeners } from "@reduxjs/toolkit/query"
-import cocktailReducer from "../features/cocktail/cocktailSlice"
-import storage from "redux-persist/lib/storage"
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-  persistReducer,
-} from "redux-persist"
+import { create } from "zustand"
+import { persist, createJSONStorage } from "zustand/middleware"
+import type { RandomCocktail } from "../pages/home/model/types"
+import type {
+  Ingredient,
+  IngredientFilterState,
+} from "../entities/ingredient/model/localIngredient/ingredient.type"
+import { initialFilterState } from "../entities/ingredient/model/localIngredient/ingredient.filter"
 
-const persistConfig = {
-  key: "root",
-  version: 1,
-  storage,
+// 랜덤 칵테일
+type RandomCocktailState = {
+  randomCocktail?: RandomCocktail
 }
 
-const persistedReducer = persistReducer(persistConfig, cocktailReducer)
-
-export const makeStore = (preloadedState?: Partial<RootState>) => {
-  const store = configureStore({
-    reducer: persistedReducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }),
-    // Adding the api middleware enables caching, invalidation, polling,
-    // and other useful features of `rtk-query`.
-  })
-  // configure listeners using the provided defaults
-  // optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors
-  setupListeners(store.dispatch)
-  return store
+type RandomCocktailAction = {
+  updateRandomCocktail: (randomCocktail: RandomCocktail) => void
 }
 
-export const store = makeStore()
+export const useRandomCocktailStore = create<
+  RandomCocktailState & RandomCocktailAction
+>()(
+  persist(
+    (set, get) => ({
+      updateRandomCocktail: randomCocktail => set({ randomCocktail }),
+    }),
+    {
+      name: "randomCocktail-storage",
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+)
 
-// Infer the type of `store`
-export type RootState = ReturnType<typeof cocktailReducer>
-export type AppStore = typeof store
-// Infer the `AppDispatch` type from the store itself
-export type AppDispatch = AppStore["dispatch"]
-export type AppThunk<ThunkReturnType = void> = ThunkAction<
-  ThunkReturnType,
-  RootState,
-  unknown,
-  Action
->
+// 최근 검색어
+type RecentSearchState = {
+  searchValue: string
+  recentSearchValueList: string[]
+}
+
+type RecentSearchAction = {
+  updateSearchValue: (searchValue: string) => void
+  addRecentSearchValueList: (searchValue: string) => void
+  deleteRecentSearchValueList: (searchValue: string) => void
+  resetRecentSearchValueList: () => void
+}
+
+export const useRecentSearchStore = create<
+  RecentSearchState & RecentSearchAction
+>()(
+  persist(
+    (set, get) => ({
+      searchValue: "",
+      recentSearchValueList: [],
+      updateSearchValue: searchValue => set({ searchValue }),
+      addRecentSearchValueList: (searchValue: string) =>
+        set(state => ({
+          recentSearchValueList: state.recentSearchValueList.includes(
+            searchValue,
+          )
+            ? [
+                searchValue,
+                ...state.recentSearchValueList.slice(
+                  0,
+                  state.recentSearchValueList.findIndex(
+                    value => value === searchValue,
+                  )!,
+                ),
+                ...state.recentSearchValueList.slice(
+                  state.recentSearchValueList.findIndex(
+                    value => value === searchValue,
+                  )! + 1,
+                ),
+              ]
+            : [searchValue, ...state.recentSearchValueList],
+        })),
+      deleteRecentSearchValueList: (searchValue: string) =>
+        set(state => ({
+          recentSearchValueList: state.recentSearchValueList.filter(
+            value => value !== searchValue,
+          ),
+        })),
+      resetRecentSearchValueList: () => set({ recentSearchValueList: [] }),
+    }),
+    {
+      name: "recentSearch-storage",
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+)
+
+interface IsFromIngredient {
+  scrollY: number
+  state: boolean
+}
+
+// 재료
+type IngredientState = {
+  myIngredientList: Ingredient[]
+  selectedFilters: IngredientFilterState
+  isFromIngredient: IsFromIngredient
+}
+
+type IngredientAction = {
+  updateMyIngredientList: (ingredient: Ingredient) => void
+  updateSelectedFilters: (filters: IngredientFilterState) => void
+  updateIsFromIngredient: (fromIngredient: IsFromIngredient) => void
+}
+
+export const useIngredientStore = create<IngredientState & IngredientAction>(
+  set => ({
+    myIngredientList: [],
+    selectedFilters: initialFilterState,
+    isFromIngredient: { scrollY: 0, state: false },
+    updateMyIngredientList: ingredient =>
+      set(state => ({
+        myIngredientList: state.myIngredientList.some(
+          ingred => ingred.name === ingredient.name,
+        )
+          ? state.myIngredientList.filter(
+              ingred => ingred.name !== ingredient.name,
+            )
+          : [...state.myIngredientList, ingredient],
+      })),
+    updateSelectedFilters: selectedFilters => set({ selectedFilters }),
+    updateIsFromIngredient: state => set({ isFromIngredient: state }),
+  }),
+)

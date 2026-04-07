@@ -1,0 +1,8 @@
+export { default as Beer } from "./beer.png"
+export { default as Classic } from "./classic.png"
+export { default as Cocoa } from "./cocoa.png"
+export { default as Coffee } from "./coffee.png"
+export { default as Liqueur } from "./liqueur.png"
+export { default as Ordinary } from "./ordinary.png"
+export { default as Shaking } from "./shaking.png"
+export { default as Shot } from "./shot.png"
