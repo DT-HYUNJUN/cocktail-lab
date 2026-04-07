@@ -110,18 +110,20 @@ const MainLayout = () => {
       />
       <WideContainer>
         <Header>
-          <LogoBox>
+          <LogoBox onClick={() => handleClickLink("/")}>
             <LogoIcon src={Logo} alt="cocktail_lab_logo" />
             <Typography variant="h4" color="primary" fontWeight={900}>
               Cocktail Lab
             </Typography>
           </LogoBox>
-          <SearchBar
-            inputValue={value}
-            handleInputSearch={e => setValue(e.target.value)}
-            handleSubmitSearch={handleSubmitSearch}
-            placeholder="칵테일 또는 재료 검색"
-          />
+          <SearchBox>
+            <SearchBar
+              inputValue={value}
+              handleInputSearch={e => setValue(e.target.value)}
+              handleSubmitSearch={handleSubmitSearch}
+              placeholder="칵테일 또는 재료 검색"
+            />
+          </SearchBox>
         </Header>
         <MenuBar>
           <MenuList>
@@ -209,12 +211,12 @@ const MenuLink = styled("div")<{ $selected: boolean }>`
 `
 
 // PC 화면
-const Header = styled("div")`
-  display: grid;
-  grid-template-columns: 2fr 4fr 6fr;
-  align-items: center;
-  margin-bottom: 16px;
-`
+const Header = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  marginBottom: 16,
+  gap: 48,
+})
 
 const LogoIcon = styled("img")({
   width: 28,
@@ -225,4 +227,9 @@ const LogoBox = styled("div")({
   display: "flex",
   alignItems: "center",
   gap: 8,
+  cursor: "pointer",
+})
+
+const SearchBox = styled("div")({
+  width: 400,
 })
