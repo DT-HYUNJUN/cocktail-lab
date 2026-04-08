@@ -391,20 +391,12 @@ export const ingredientData: Ingredient[] = [
   {
     name: "Lemon Juice",
     category: "juice",
-    abv: 0,
     flavorProfile: ["sour", "citrus"],
   },
   {
     name: "Lime Juice",
     category: "juice",
-    abv: 0,
     flavorProfile: ["sour", "citrus"],
-  },
-  {
-    name: "Simple Syrup",
-    category: "syrup",
-    abv: 0,
-    flavorProfile: ["sweet"],
   },
   {
     name: "Angostura Bitters",
@@ -415,25 +407,21 @@ export const ingredientData: Ingredient[] = [
   {
     name: "Tonic Water",
     category: "soft_drink",
-    abv: 0,
     flavorProfile: ["bitter", "sweet"],
   },
   {
     name: "Ginger Beer",
     category: "soft_drink",
-    abv: 0,
     flavorProfile: ["spicy", "sweet"],
   },
   {
     name: "Mint",
     category: "herb",
-    abv: 0,
     flavorProfile: ["herbal"],
   },
   {
     name: "Egg White",
     category: "dairy",
-    abv: 0,
     flavorProfile: ["creamy"],
   },
   {
@@ -445,7 +433,6 @@ export const ingredientData: Ingredient[] = [
   {
     name: "Soda Water",
     category: "soft_drink",
-    abv: 0,
     flavorProfile: ["dry"],
   },
   {
@@ -457,13 +444,11 @@ export const ingredientData: Ingredient[] = [
   {
     name: "Cinnamon",
     category: "spice",
-    abv: 0,
     flavorProfile: ["spicy", "sweet"],
   },
   {
     name: "Honey",
     category: "syrup",
-    abv: 0,
     flavorProfile: ["sweet"],
   },
   {
@@ -485,13 +470,6 @@ export const ingredientData: Ingredient[] = [
     category: "base_spirit",
     abv: 45,
     flavorProfile: ["spicy", "dry"],
-    baseSpiritGroup: "whiskey",
-  },
-  {
-    name: "Single Malt Scotch",
-    category: "base_spirit",
-    abv: 43,
-    flavorProfile: ["dry"],
     baseSpiritGroup: "whiskey",
   },
   {

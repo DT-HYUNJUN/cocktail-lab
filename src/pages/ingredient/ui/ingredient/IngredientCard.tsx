@@ -68,7 +68,6 @@ const IngredientCard = ({ ingred }: IngredientCardProps) => {
       )}
       <Typography variant="body2">{t(`names.${ingred.name}`)}</Typography>
       <FilterLabelBox>
-        {/* <FilterLabel>{f(ingred.category)}</FilterLabel> */}
         {ingred.baseSpiritGroup ? (
           <FilterLabel>{f(`baseSpirit.${ingred.baseSpiritGroup}`)}</FilterLabel>
         ) : (
@@ -125,4 +124,8 @@ const FilterLabel = styled("div")({
   backgroundColor: aperolOrange[400],
   color: "#FFF",
   padding: "2px 4px",
+
+  "@media (min-width: 768px)": {
+    fontSize: 12,
+  },
 })
