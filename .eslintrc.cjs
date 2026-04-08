@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: ["@typescript-eslint"],
   root: true,
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "vite.config.ts"],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       2,
