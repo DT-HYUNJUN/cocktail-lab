@@ -1,4 +1,4 @@
-import { Button, Chip, Container, Divider, Typography } from "@mui/material"
+import { Button, Chip, Divider, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import ingreds from "../../../shared/i18n/ko/translation.json"
 import styled from "styled-components"
@@ -10,7 +10,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useRef, useState } from "react"
 import { Loading } from "../../../shared/ui"
 import getIngredientByName from "../api/getIngredientByName"
-import IngredientCard from "../../ingredient/ui/ingredient/IngredientCard"
 import IngredientSearchCard from "./IngredientSearchCard"
 
 const engPattern = /[a-zA-Z]/
@@ -25,17 +24,13 @@ const SearchPage = () => {
     resetRecentSearchValueList,
   } = useRecentSearchStore()
 
-  const { data, isFetching, isSuccess } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["getCocktailByName", name],
     queryFn: () => getCocktailByName(checkName(name || "", "cocktail")),
     enabled: !!name,
   })
 
-  const {
-    data: iData,
-    isFetching: iLoading,
-    isSuccess: iSuccess,
-  } = useQuery({
+  const { data: iData, isFetching: iLoading } = useQuery({
     queryKey: ["getIngredientByName", name],
     queryFn: () => getIngredientByName(checkName(name || "", "cocktail")),
     enabled: !!name,

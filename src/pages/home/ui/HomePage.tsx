@@ -32,7 +32,7 @@ const HomePage = () => {
     enabled: !randomCocktail,
   })
 
-  const { data: filterCocktailList, isFetching } = useQuery({
+  const { data: filterCocktailList } = useQuery({
     queryKey: ["getCocktailByFilter", filterPayload],
     queryFn: () => getCocktailByFilter(filterPayload),
     refetchOnWindowFocus: false,
