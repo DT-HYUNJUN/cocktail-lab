@@ -42,7 +42,7 @@ const IngredientDetailPage = () => {
     enabled: !!strIngredient,
   })
 
-  const { data: cocktailList, isFetching: isFetchingCocktail } = useQuery({
+  const { data: cocktailList } = useQuery({
     queryKey: ["getCocktailsByIngredient"],
     queryFn: () => {
       if (!strIngredient) {

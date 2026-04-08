@@ -1,4 +1,4 @@
-import { Container, Divider, Grid, Typography } from "@mui/material"
+import { Grid, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
 import { aperolOrange, backgroundColor } from "../../../shared/color/color"
@@ -10,7 +10,6 @@ import getCocktailByFilter from "../api/getCocktailByFilter"
 import { Loading } from "../../../shared/ui"
 import CocktailCard from "../../../shared/ui/cocktail/CocktailCard"
 import SearchIcon from "@mui/icons-material/Search"
-import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 const CocktailPage = () => {
@@ -26,8 +25,6 @@ const CocktailPage = () => {
 
   const iconRefs = useRef<(HTMLDivElement | null)[]>([])
   const effectRef = useRef<HTMLDivElement | null>(null)
-
-  const navigate = useNavigate()
 
   const { data: cocktails, isFetching } = useQuery({
     queryKey: ["getCocktailByFilter", currentFilter, currentFilterItemIndex],
