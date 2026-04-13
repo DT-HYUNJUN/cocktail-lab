@@ -125,15 +125,31 @@ npm run lint
 ```
 cocktail-lab/
 ├── .github/
-│   └── workflows/          # GitHub Actions CI/CD
-├── .vercel/                # GutHub Actions CI/CD용 vercel 토큰
-├── readme/                 # README 이미지 리소스
+│   └── workflows/            # GitHub Actions CI/CD
+├── .vercel/                  # GutHub Actions CI/CD용 vercel 토큰
+├── readme/                   # README 이미지 리소스
 ├── src/
-│   ├── app/                # 앱 전체 초기화 및 설정
-│   ├── pages/              # 각 라우트에 대응하는 페이지 컴포넌트
-│   ├── widgets/            # 여러 entities/features를 조합한 독립적인 UI 블록
-│   ├── entities/           # 비즈니스 도메인 단위 모듈 (칵테일, 재료 등)
-│   ├── shared/             # 어디서든 재사용 가능한 공통 코드
+│   ├── app/                  # 앱 전체 초기화 및 설정
+│   │   └── layouts/
+│   ├── pages/                # 각 라우트에 대응하는 페이지 컴포넌트
+│   │   ├── home/
+│   │   ├── cocktail/
+│   │   ├── cocktailDetail/
+│   │   ├── ingredient/
+│   │   ├── ingredientDetail/
+│   │   └── search/
+│   ├── widgets/              # 여러 entities/features를 조합한 독립적인 UI 블록
+│   ├── entities/             # 비즈니스 도메인 단위 모듈 (칵테일, 재료 등)
+│   │   ├── cocktail/
+│   │   └── ingredient/
+│   └── shared/               # 어디서든 재사용 가능한 공통 코드
+│       ├── api/
+│       ├── assets/
+│       ├── color/
+│       ├── i18n/
+│       ├── theme/
+│       ├── ui/
+│       └── utils/
 ├── index.html
 ├── package.json
 ├── tsconfig.json
