@@ -36,8 +36,8 @@ const Header = styled.header`
   align-items: center;
   z-index: 1000;
   padding-top: 4px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
 
   /* 태블릿 */
   @media screen and (min-width: 768px) {

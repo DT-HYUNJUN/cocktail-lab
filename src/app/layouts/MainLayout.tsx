@@ -5,12 +5,23 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import styled from "styled-components"
 import SearchBar from "../../widgets/SearchBar"
-import { type ChangeEvent, useRef, useState } from "react"
+import { type ChangeEvent, useEffect, useRef, useState } from "react"
 import { useRecentSearchStore } from "../store"
 import { aperolOrange } from "../../shared/color/color"
 import Logo from "../../shared/assets/icon/cocktail_lab.png"
 import { Divider, Typography } from "@mui/material"
 import ScrollButton from "../../widgets/ScrollButton"
+
+const HomeButton = () => {
+  return (
+    <HomeButtonBox>
+      <LogoIcon src={Logo} alt="cocktail_lab_logo" />
+      <Typography color="primary" fontWeight={700}>
+        Cocktail Lab
+      </Typography>
+    </HomeButtonBox>
+  )
+}
 
 const BackButton = () => {
   const navigate = useNavigate()
@@ -26,7 +37,7 @@ const BackButton = () => {
   )
 }
 
-const MyButton = () => {
+const SearchButton = () => {
   const navigate = useNavigate()
 
   const handleClickMy = () => {
@@ -82,18 +93,24 @@ const Blank = () => {
 const MainLayout = () => {
   const [value, setValue] = useState("")
   const navigate = useNavigate()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const { pathname } = useLocation()
 
   const updateSearchValue = useRecentSearchStore(
     state => state.updateSearchValue,
   )
 
-  const { pathname } = useLocation()
+  const addRecentSearchValueList = useRecentSearchStore(
+    state => state.addRecentSearchValueList,
+  )
+
   const isHome = pathname === "/"
   const isSearch = pathname.includes("/search")
 
   const handleSubmitSearch = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     updateSearchValue(value)
+    addRecentSearchValueList(value)
     navigate(`/search/${value}`)
   }
 
@@ -101,12 +118,21 @@ const MainLayout = () => {
     navigate(pathname)
   }
 
+  const handleClear = () => {
+    setValue("")
+    inputRef.current && inputRef.current.focus()
+  }
+
+  useEffect(() => {
+    console.log(pathname)
+  }, [pathname])
+
   return (
     <>
       <TobNavBar
-        left={isHome ? Blank : BackButton}
+        left={isHome ? HomeButton : BackButton}
         center={isSearch ? SearchSection : Blank}
-        right={MyButton}
+        right={SearchButton}
       />
       <WideContainer>
         <Header>
@@ -118,10 +144,13 @@ const MainLayout = () => {
           </LogoBox>
           <SearchBox>
             <SearchBar
+              inputRef={inputRef}
               inputValue={value}
               handleInputSearch={e => setValue(e.target.value)}
               handleSubmitSearch={handleSubmitSearch}
-              placeholder="칵테일 또는 재료 검색"
+              placeholder="검색어를 입력하세요"
+              isClearButton={true}
+              handleClearSearch={handleClear}
             />
           </SearchBox>
         </Header>
@@ -157,7 +186,7 @@ const MainLayout = () => {
       </WideContainer>
       <ScrollButton />
       <Outlet />
-      <BottomNavbar />
+      {pathname.startsWith("/search") || <BottomNavbar />}
     </>
   )
 }
@@ -232,4 +261,11 @@ const LogoBox = styled("div")({
 
 const SearchBox = styled("div")({
   width: 400,
+})
+
+const HomeButtonBox = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: 4,
+  cursor: "pointer",
 })

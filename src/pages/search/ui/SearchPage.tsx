@@ -1,4 +1,4 @@
-import { Button, Chip, Divider, Typography } from "@mui/material"
+import { Button, Chip, Divider, Grid, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import ingreds from "../../../shared/i18n/ko/translation.json"
 import styled from "styled-components"
@@ -130,14 +130,13 @@ const SearchPage = () => {
           <Typography variant="h5">재료</Typography>
           <div>
             {iData.ingredients && (
-              <CocktailList>
+              <Grid container spacing={{ xs: 3, md: 6 }}>
                 {iData.ingredients.map(ingred => (
-                  <IngredientSearchCard
-                    key={ingred.idIngredient}
-                    name={ingred.strIngredient}
-                  />
+                  <Grid key={ingred.idIngredient} size={{ xs: 6, md: 3 }}>
+                    <IngredientSearchCard name={ingred.strIngredient} />
+                  </Grid>
                 ))}
-              </CocktailList>
+              </Grid>
             )}
           </div>
         </ResultSection>
@@ -149,11 +148,13 @@ const SearchPage = () => {
           <Typography variant="h5">칵테일</Typography>
           <div>
             {data.drinks && (
-              <CocktailList>
+              <Grid container spacing={{ xs: 3, md: 6 }}>
                 {data.drinks.map(drink => (
-                  <CocktailCard key={drink.idDrink} cocktail={drink} />
+                  <Grid key={drink.idDrink} size={{ xs: 6, md: 3 }}>
+                    <CocktailCard cocktail={drink} />
+                  </Grid>
                 ))}
-              </CocktailList>
+              </Grid>
             )}
           </div>
         </ResultSection>
@@ -208,12 +209,6 @@ const ResultSection = styled("section")({
   marginBottom: 32,
   paddingLeft: 16,
   paddingRight: 16,
-})
-
-const CocktailList = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: 24,
 })
 
 const ResultBox = styled("div")({
