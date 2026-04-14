@@ -1,6 +1,6 @@
 import type { AxiosResponse } from "axios"
 import { apiClient } from "../../../shared/api"
-import type { DrinkDto } from "../../../entities/drink/api/types"
+import type { DrinkDto } from "../../../entities/cocktail/api/types"
 
 const getCocktailByName = async (strDrink: string) => {
   const response: AxiosResponse<DrinkDto> = await apiClient.get(

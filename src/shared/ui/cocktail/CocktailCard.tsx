@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import type { CocktailCardType } from "../../../entities/drink/model/types"
+import type { CocktailCardType } from "../../../entities/cocktail/model/types"
 import { useNavigate } from "react-router-dom"
 import { aperolOrange } from "../../color/color"
 

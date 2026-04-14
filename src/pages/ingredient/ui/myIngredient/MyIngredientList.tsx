@@ -2,9 +2,14 @@ import { Grid, Typography } from "@mui/material"
 import { useIngredientStore } from "../../../../app/store"
 import IngredientCard from "../ingredient/IngredientCard"
 import styled from "styled-components"
+import { useEffect } from "react"
 
 const MyIngredientList = () => {
   const { myIngredientList } = useIngredientStore()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <MyIngredientListBox>

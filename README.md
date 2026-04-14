@@ -1,121 +1,223 @@
-# 카악카악테일
+# 🍹 Cocktail Lab
 
+> 다양한 칵테일 정보를 검색하고 탐색할 수 있는 서비스
 
+<br />
 
-## 프로젝트 소개
+## 📌 목차
 
-- 배포 URL : <a href="https://cacaktail.netlify.app/" >카악카악테일 바로가기</a>
+- [프로젝트 소개](#-프로젝트-소개)
+- [기술 스택](#-기술-스택)
+- [주요 기능](#-주요-기능)
+- [실행 방법](#-실행-방법)
+- [폴더 구조](#-폴더-구조)
+- [커밋 컨벤션](#-커밋-컨벤션)
+- [스크린샷](#-스크린샷)
+- [데이터 출처](#-데이터-출처)
 
-- 진행 기간 : 2024.03 ~ 2024.04
+<br />
 
-- 이 사이트는 칵테일을 좋아하는 이들을 위한 칵테일 레시피와 정보를 제공하는 플랫폼입니다. 사용자들은 다양한 칵테일 레시피를 찾아보고, 칵테일 제조 방법을 얻을 수 있습니다.
+## 🍸 프로젝트 소개
 
-## 스택
+**Cocktail Lab**은 칵테일을 좋아하는 누구나 손쉽게 칵테일 정보를 찾을 수 있는 서비스입니다.  
+칵테일 이름, 카테고리, 재료 기반으로 원하는 칵테일을 검색하고 상세 정보를 확인할 수 있습니다.
 
-| **사용 기술** | <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TYPESCRIPT&logoColor=white"/> <img src="https://img.shields.io/badge/REDUX-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/> <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white"/> <img src="https://img.shields.io/badge/I18NEXT-26A69A?style=for-the-badge&logo=I18NEXT&logoColor=white"/> |
-| --- | --- |
-| **배포** | <img src="https://img.shields.io/badge/NETLIFY-00C7B7?style=for-the-badge&logo=NETLIFY&logoColor=white"/> |
+- **배포 URL** : [https://cocktail-recipes-liard.vercel.app](https://cocktail-recipes-liard.vercel.app)
 
-## 커밋 컨벤션
+<br />
+
+## 🛠 기술 스택
+
+### Frontend
+
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+
+| 분류 | 기술 |
+|---|---|
+| **언어** | TypeScript |
+| **프레임워크** | React 18 |
+| **빌드 도구** | Vite |
+| **상태 관리** | Zustand |
+| **서버 상태** | TanStack Query (React Query v5) |
+| **UI 라이브러리** | MUI (Material UI v7) |
+| **스타일링** | styled-components, Emotion |
+| **다국어** | i18next, react-i18next |
+| **배포** | Vercel |
+
+<br />
+
+## ✨ 주요 기능
+
+### 🔍 칵테일 검색 및 필터링
+- 칵테일 이름으로 검색
+- 카테고리별 필터링 (Shot, Cocktail, Beer 등)
+
+### 📋 칵테일 상세 정보
+- 칵테일 이미지, 이름, 카테고리 확인
+- 재료 및 레시피 확인
+- 제조 방법 안내
+
+### 🌿 재료 탐색 (필터 & 정렬)
+- 재료 이름으로 검색
+- 재료 필터링 및 정렬 기능 (이름순, 카테고리별 등)
+
+### 📋 재료 상세 정보
+- 재료 이미지, 이름 확인
+- 카테고리 및 정보 확인
+- 관련 칵테일 목록 확인
+
+### 📱 반응형 UI
+- 모바일 / 데스크탑 화면 크기에 최적화된 레이아웃
+
+### 🌐 다국어 지원
+- 재료 및 일부 칵테일 영문 번역 (i18next)
+
+### ⚙️ CI/CD
+- GitHub Actions를 통한 자동 린트 및 테스트 실행
+- Vercel 자동 배포 연동
+
+<br />
+
+## 🚀 실행 방법
+
+### 요구 사항
+
+- Node.js 18 이상
+- npm 또는 yarn
+
+### 설치 및 실행
+
+```bash
+# 저장소 클론
+git clone https://github.com/DT-HYUNJUN/cocktail-lab.git
+cd cocktail-lab
+
+# 패키지 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+```
+
+### 빌드
+
+```bash
+# 프로덕션 빌드
+npm run build
+
+# 빌드 결과물 미리보기
+npm run preview
+```
+
+### 기타 명령어
+
+```bash
+# 린트 검사
+npm run lint
+```
+
+<br />
+
+## 📁 폴더 구조
 
 ```
-- ADD : 새로운 기능 추가
-- UPDATE : 업데이트 사항 추가
-- FIX : 버그 수정
-- DELETE : 기존 기능 삭제
+cocktail-lab/
+├── .github/
+│   └── workflows/            # GitHub Actions CI/CD
+├── .vercel/                  # GutHub Actions CI/CD용 vercel 토큰
+├── readme/                   # README 이미지 리소스
+├── src/
+│   ├── app/                  # 앱 전체 초기화 및 설정
+│   │   └── layouts/
+│   ├── pages/                # 각 라우트에 대응하는 페이지 컴포넌트
+│   │   ├── home/
+│   │   ├── cocktail/
+│   │   ├── cocktailDetail/
+│   │   ├── ingredient/
+│   │   ├── ingredientDetail/
+│   │   └── search/
+│   ├── widgets/              # 여러 entities/features를 조합한 독립적인 UI 블록
+│   ├── entities/             # 비즈니스 도메인 단위 모듈 (칵테일, 재료 등)
+│   │   ├── cocktail/
+│   │   └── ingredient/
+│   └── shared/               # 어디서든 재사용 가능한 공통 코드
+│       ├── api/
+│       ├── assets/
+│       ├── color/
+│       ├── i18n/
+│       ├── theme/
+│       ├── ui/
+│       └── utils/
+├── index.html
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 ```
 
-# 페이지 소개
+<br />
 
-- ### 홈 페이지
+## 📝 커밋 컨벤션
 
-  |**랜덤 칵테일**|**카테고리**|
-  |---|---|
-  |![random](./readme/home/random_cocktail.gif)|![category](./readme/home/category.gif)|
-
-- ### 칵테일 페이지
-
-  |**칵테일 카테고리**|
-  |---|
-  |![category](./readme/cocktail/category.gif)|
-
-- ### 재료 페이지
-
-  |**재료 검색**|**재료 클릭**|
-  |---|---|
-  |![ingred](./readme/ingredient/search.gif)|![click](./readme/ingredient/ingredient.gif)|
-
-- ### 마이 바 페이지
-
-  |**재료 추가**|
-  |---|
-  |![add](./readme/mybar/add.gif)|
-
-# 핵심 기능 
-
-## 무한 스크롤
-
-> 적용 이유
- - 칵테일 리스트를 확인할 때 무한 스크롤을 적용해 자연스러운 스크롤 이벤트를 통한 사용자 경험을 높이고자 적용했습니다.
-
-> 적용 방식
- - [react-intersection-observer](https://www.npmjs.com/package/react-intersection-observer) 를 사용해 구현했습니다.
- - 스크롤을 감지 할 태그에 `useInview()`훅의 `ref`를 넣고 사용자의 화면이 해당 태그를 감지 할 때를 확인합니다.
- - `useEffect()`를 통해 감지를 확인할 때마다 추가 데이터를 불러와 기존 칵테일 리스트에 추가합니다.
- - 만약 불러오는 데이터의 길이가 `10` 미만이면 무한 스크롤을 중지합니다.
-
-
-<details>
-<summary>코드</summary>
-
-**FilteredCocktail.tsx**
-
-```tsx
-const FilteredCocktail = () => {
-  // 스크롤을 감지할 ref
-  const [ref, inView] = useInView()
-
-  // 첫 로딩 -> 10개의 데이터를 불러옴
-  useEffect(() => {
-    if (selectedFilterValue !== pathFilterValue) {
-      dispatch(
-        getByFilter({
-          filterValue: pathFilterValue,
-          count: 0,
-          reset: true,
-          filter,
-        }),
-      )
-    }
-  }, [])
-
-  // inView를 체크할 때마다 추가 데이터를 불러옴
-  useEffect(() => {
-    if (count !== 0 && !isEnd && inView) {
-      dispatch(
-        getByFilter({
-          filterValue: pathFilterValue,
-          count,
-          reset: false,
-          filter,
-        }),
-      )
-    }
-  }, [inView])
-
-  return (
-    drinkList && (
-      <Container>
-        ...
-
-        {drinkList.map(drink => (
-          <CocktailCard key={drink.idDrink} drink={drink} />
-        ))}
-        {isEnd && <SectionTitle text="끝" variant="h4" />}
-      </Container>
-    )
-    <div ref={ref} />
-  )
-}
 ```
-</details>
+feat     : 새로운 기능 추가
+fix      : 버그 수정
+style    : 코드 포맷팅, 세미콜론 누락 등
+refactor : 코드 리팩토링
+chore    : 빌드 설정, 패키지 업데이트 등
+docs     : 문서 수정
+```
+
+<br />
+
+## 📸 스크린샷
+
+|홈|
+|--|
+|<img src="./readme/pc/pc-home.png" />|
+
+|칵테일|
+|--|
+|<img src="./readme/pc/pc-cocktail.png" />|
+|<img src="./readme/pc/pc-cocktail-detail.png" />|
+
+
+|재료|
+|--|
+|<img src="./readme/pc/pc-ingredient.png" />|
+|<img src="./readme/pc/pc-ingredient-detail.png" />|
+|<img src="./readme/pc/pc-ingredient-filter.gif" />|
+
+|검색|
+|--|
+|<img src="./readme/pc/pc-search.png" />|
+
+
+### 📱 모바일 환경
+|홈|
+|--|
+|<img src="./readme/mobile/m-home.png" width="200px" />|
+
+|칵테일|세부정보|
+|--|--|
+|<img src="./readme/mobile/m-cocktail.png" width="200px" />|<img src="./readme/mobile/m-cocktail-detail.gif" width="200px" />|
+
+|재료|세부정보|필터|
+|--|--|--|
+|<img src="./readme/mobile/m-ingredient.gif" width="200px" />|<img src="./readme/mobile/m-ingredient-detail.gif" width="200px" />|<img src="./readme/mobile/m-ingredient-filter.gif" width="200px" />|
+
+|검색|
+|--|
+|<img src="./readme/mobile/m-search.gif" width="200px" />|
+
+<br />
+
+## 데이터 출처
+
+본 서비스는 **[TheCocktailDB](https://www.thecocktaildb.com/)** 의 무료 공개 API를 사용하여 칵테일 데이터를 제공합니다.
+
+| 항목 | 내용 |
+|---|---|
+| **API** | TheCocktailDB API |
+| **URL** | https://www.thecocktaildb.com/api.php | 

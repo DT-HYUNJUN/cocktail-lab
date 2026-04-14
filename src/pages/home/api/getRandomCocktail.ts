@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios"
-import type { DrinkDto } from "../../../entities/drink/api/types"
+import type { DrinkDto } from "../../../entities/cocktail/api/types"
 import { apiClient } from "../../../shared/api"
 
 export const getRandomCocktail = async () => {
