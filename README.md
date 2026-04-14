@@ -194,7 +194,7 @@ docs     : 문서 수정
 |<img src="./readme/pc/pc-search.png" />|
 
 
-## 📱 모바일 환경
+### 📱 모바일 환경
 |홈|
 |--|
 |<img src="./readme/mobile/m-home.png" width="200px" />|
@@ -220,5 +220,4 @@ docs     : 문서 수정
 | 항목 | 내용 |
 |---|---|
 | **API** | TheCocktailDB API |
-| **URL** | https://www.thecocktaildb.com/api.php |
-| **라이선스** | Free to use (non-commercial) |
+| **URL** | https://www.thecocktaildb.com/api.php | 
